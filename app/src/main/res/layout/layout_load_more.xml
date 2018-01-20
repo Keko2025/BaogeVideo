@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/foot_load_layout"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:gravity="center"
+              android:orientation="horizontal"
+              xmlns:custom="http://schemas.android.com/tools">
+
+    <demo.soho.com.baogevideo.ui.widget.CircleProgressView
+        android:id="@+id/load_pro"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        app:matProg_barColor="?attr/colorAccent"
+        app:matProg_barWidth="2dp"
+        app:matProg_progressIndeterminate="true"
+        custom:useAnimation="true"
+        custom:foreEndColor="@color/colorAccent"
+        custom:foreStartColor="@color/color_common_blue_bar"
+        />
+
+    <TextView
+        android:id="@+id/load_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:gravity="center"
+        android:text="加载中..."
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_14" />
+
+</LinearLayout>
+
