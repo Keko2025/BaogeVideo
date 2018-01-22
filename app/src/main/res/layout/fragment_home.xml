@@ -34,7 +34,7 @@
             app:tabIndicatorColor="@color/text_red"
             app:tabIndicatorHeight="@dimen/dimen_2"
             app:tabSelectedTextColor="@color/text_red"
-            app:tabTextColor="#8c8c8c"
+            app:tabTextColor="@color/tab_selected"
             app:tabTextAppearance="@style/TabLayout.TabText"
             app:tabGravity="center"
             >

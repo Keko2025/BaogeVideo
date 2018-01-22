@@ -11,6 +11,8 @@ android {
         versionCode 1
         versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+//        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -20,7 +22,7 @@ android {
         }
         debug{
             minifyEnabled  false
-            buildConfigField "boolean", "LOG", "false"
+            buildConfigField "boolean", "LOG", "true"
             buildConfigField "String", "URL_HOST", "\"http://api.baoge.tv/\""
         }
     }
@@ -51,5 +53,12 @@ dependencies {
     compile 'com.shuyu:GSYVideoPlayer:2.0.9'
 
     compile 'com.bigkoo:svprogresshud:1.0.6'// 提示框
+
+    compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
+    compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
+
+//    compile 'com.android.support:multidex:1.0.0'
+
+    compile 'com.zhy:flowlayout-lib:1.0.1'
 
 }

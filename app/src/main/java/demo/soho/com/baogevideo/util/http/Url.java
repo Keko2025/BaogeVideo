@@ -8,9 +8,16 @@ import demo.soho.com.baogevideo.BuildConfig;
  */
 
 public class Url {
+
     public static final String BASE_URL = BuildConfig.URL_HOST;
 
+    //首页全部视频api
     public static String VIDEO_ALL_API = BASE_URL + "index.php?s=/Video/index";
-    public static String VIDEO_DESC_API = BASE_URL + "/index.php?s=/Video/detail";
+    //视频详情
+    public static String VIDEO_DESC_API = BASE_URL + "index.php?s=/Video/detail";
+    //相关视频
+    public static String VIDEO_RELATED = BASE_URL + "index.php?s=/Video/index";
+    //排行
+    public static String VIDEO_WEEK_RANK = BASE_URL + "index.php?s=/Video/ranking";
 
 }

@@ -23,7 +23,7 @@
         android:id="@+id/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/play"
+        android:src="@drawable/play_start"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
@@ -137,7 +137,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="50dp"
         android:scaleType="centerInside"
-        android:src="@drawable/unlock"
+        android:src="@drawable/player_lock"
         />
 
     <RelativeLayout

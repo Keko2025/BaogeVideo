@@ -2,7 +2,6 @@ package demo.soho.com.baogevideo.ui.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -59,22 +58,15 @@ public class LandLayoutVideo extends StandardGSYVideoPlayer {
     }
     @Override
     protected void updateStartImage() {
-//        if (mIfCurrentIsFullscreen) {
         ImageView imageView = (ImageView) mStartButton;
         if (mCurrentState == CURRENT_STATE_PLAYING) {
-            imageView.setImageResource(R.drawable.video_pause_bg);
+            imageView.setImageResource(R.drawable.play_pause);
         } else if (mCurrentState == CURRENT_STATE_ERROR) {
-            imageView.setImageResource(R.drawable.play);
+            imageView.setImageResource(R.drawable.play_start);
         }else if(mCurrentState == CURRENT_STATE_AUTO_COMPLETE){
-            imageView.setImageResource(R.drawable.play);
+            imageView.setImageResource(R.drawable.play_start);
         }else {
-            imageView.setImageResource(R.drawable.play);
+            imageView.setImageResource(R.drawable.play_start);
         }
-//        else if(mCurrentState == CURRENT_STATE_AUTO_COMPLETE){
-//            imageView.setImageResource(R.drawable.replay);
-//        }
-//        } else {
-//            super.updateStartImage();
-//        }
     }
 }

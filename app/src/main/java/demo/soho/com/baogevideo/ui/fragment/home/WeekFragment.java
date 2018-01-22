@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -26,17 +28,17 @@ import demo.soho.com.baogevideo.ui.adapter.common.HeaderViewRecyclerAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerCommonAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerViewHolder;
 import demo.soho.com.baogevideo.ui.fragment.base.BaseFragment;
+import demo.soho.com.baogevideo.ui.widget.CircleProgressView;
 import demo.soho.com.baogevideo.util.L;
 import demo.soho.com.baogevideo.util.http.OkHttpUtil;
 import demo.soho.com.baogevideo.util.http.Url;
 
-
 /**
  * @author dell
- * @data 2018/1/19.
+ * @data 2018/1/22.
  */
 
-public class AllVideoFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class WeekFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
     @BindView(R.id.recycler)
@@ -50,7 +52,8 @@ public class AllVideoFragment extends BaseFragment implements SwipeRefreshLayout
     private LinearLayoutManager layoutManager;
     private HeaderViewRecyclerAdapter mAdapter;
     private View loadMoreView;
-
+    private TextView loadingTv;
+    private CircleProgressView loadPg;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -90,7 +93,7 @@ public class AllVideoFragment extends BaseFragment implements SwipeRefreshLayout
         adapter.setOnItemClickListener(new RecyclerCommonAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                mContext.startActivity(new Intent(mContext,VideoDesActivity.class).putExtra("videoId",videoList.get(position).getId()));
+                mContext.startActivity(new Intent(mContext,VideoDesActivity.class).putExtra("videoId",videoList.get(position).getVideo_id()));
                 L.e("id：" + videoList.get(position).getId());
             }
         });
@@ -124,24 +127,18 @@ public class AllVideoFragment extends BaseFragment implements SwipeRefreshLayout
             return;
         }
         loadMoreView = LayoutInflater.from(mContext).inflate(R.layout.layout_load_more, recyclerView, false);
+        loadingTv = (TextView)loadMoreView.findViewById(R.id.load_tv);
+        loadPg = (CircleProgressView)loadMoreView.findViewById(R.id.load_pro);
         mAdapter.addFooterView(loadMoreView);
         loadMoreView.setVisibility(View.GONE);
     }
-
-    /**
-     * 全部视频
-     */
     @Override
     protected void initData() {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("p",page);
         parameters.put("r",pageno);
-        new OkHttpUtil().post(Url.VIDEO_ALL_API, parameters, new OkHttpUtil.HttpCallback() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
+        parameters.put("type","1");
+        new OkHttpUtil().post(Url.VIDEO_WEEK_RANK, parameters, new OkHttpUtil.HttpCallback() {
             @Override
             public void onError(String msg) {
                 super.onError(msg);
@@ -160,12 +157,14 @@ public class AllVideoFragment extends BaseFragment implements SwipeRefreshLayout
             public void onSuccess(String data) {
                 L.e("response:" + data);
                 refreshLayout.setRefreshing(false);
-                loadMoreView.setVisibility(View.GONE);
                 VideoListBean videoBean = new Gson().fromJson(data,VideoListBean.class);
                 if(videoBean.getData().size() > 0){
                     if(page == 1 && videoList.size() > 0){
                         videoList.clear();
                     }
+                }else {
+                    loadPg.setVisibility(View.GONE);
+                    loadingTv.setText(R.string.load_finish);
                 }
                 videoList.addAll(videoBean.getData());
                 adapter.notifyDataSetChanged();

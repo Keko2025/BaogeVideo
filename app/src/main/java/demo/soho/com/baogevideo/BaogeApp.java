@@ -22,4 +22,10 @@ public class BaogeApp extends Application {
                 .build();
         Fresco.initialize(this, config);
     }
+
+//    @Override
+//    protected void attachBaseContext(Context base) {
+//        super.attachBaseContext(base);
+//        MultiDex.install(base);
+//    }
 }

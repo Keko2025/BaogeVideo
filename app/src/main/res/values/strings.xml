@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">BaogeVideo</string>
+
+    <string name="introduction">简介</string>
+    <string name="video_desc_review">评论</string>
+    <string name="week_rank">周排行</string>
+    <string name="month_rank">月排行</string>
+    <string name="total_rank">总排行</string>
+    <string name="load_finish">已经加载完毕</string>
 </resources>
