@@ -34,5 +34,6 @@
 
         <activity android:name=".ui.activity.search.VideoTagActivity"/>
         <activity android:name=".ui.activity.home.UserZoneActivity"/>
+        <activity android:name=".ui.activity.home.CommentDescActivity"/>
     </application>
 </manifest>
