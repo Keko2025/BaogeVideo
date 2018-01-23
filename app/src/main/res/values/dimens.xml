@@ -6,7 +6,7 @@
     <!-- 文字大小 -->
     <dimen name="text_9">9sp</dimen>
     <dimen name="text_10">10sp</dimen>
-
+    <dimen name="text_11">11sp</dimen>
     <dimen name="text_12">12sp</dimen>
     <dimen name="text_13">13sp</dimen>
     <dimen name="text_14">14sp</dimen>

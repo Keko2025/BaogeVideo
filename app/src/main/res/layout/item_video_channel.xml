@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/video_details_relative_channel"
+    style="@style/style_common_click_effect_mw"
+    android:layout_centerVertical="true"
+    android:paddingRight="@dimen/dimen_14">
 
-</LinearLayout>
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/channel_author_img"
+        android:layout_width="@dimen/dimen_45"
+        android:layout_height="@dimen/dimen_45"
+        android:layout_margin="@dimen/dimen_10"
+        fresco:roundAsCircle="true"
+        fresco:roundingBorderWidth="@dimen/dimen_2"
+        fresco:actualImageScaleType="focusCrop"
+        android:layout_centerVertical="true"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/channel_author_img"
+        android:layout_centerVertical="true"
+        >
+        <TextView
+            android:id="@+id/tv_channel_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="菲尔西斯"
+            android:textSize="@dimen/text_15"
+            android:textColor="#222222"/>
+
+        <TextView
+            android:id="@+id/tv_channel_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_channel_name"
+            android:text="从篮球转投健美，一路走来，外界质疑与夸赞不断，用无比对称、比例协调的肌肉体型征服观众与裁判，7届奥冠证明了西斯的实力（2011-2017奥赛无差别级冠军）"
+            android:singleLine="true"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_10"/>
+
+        <TextView
+            android:id="@+id/tv_channel_updata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2018-01-25"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_12"/>
+    </RelativeLayout>
+
+</RelativeLayout>

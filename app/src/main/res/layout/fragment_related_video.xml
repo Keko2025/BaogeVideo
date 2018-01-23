@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/relate_video_img"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_5"
         >
         <TextView
             android:id="@+id/relate_vedio_title_name"

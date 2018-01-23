@@ -17,6 +17,8 @@ public class Url {
     public static String VIDEO_DESC_API = BASE_URL + "index.php?s=/Video/detail";
     //相关视频
     public static String VIDEO_RELATED = BASE_URL + "index.php?s=/Video/index";
+    //视频评论
+    public static String VIDEO_COMMONT = BASE_URL + "index.php?s=/Comments/index";
     //排行
     public static String VIDEO_WEEK_RANK = BASE_URL + "index.php?s=/Video/ranking";
 

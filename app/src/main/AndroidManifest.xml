@@ -29,7 +29,10 @@
         <activity android:name=".ui.activity.home.VideoDesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize"
+            />
 
+        <activity android:name=".ui.activity.search.VideoTagActivity"/>
+        <activity android:name=".ui.activity.home.UserZoneActivity"/>
     </application>
 </manifest>
