@@ -1,6 +1,8 @@
 package demo.soho.com.baogevideo.ui.fragment.home;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,10 +10,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
@@ -24,6 +30,7 @@ import butterknife.ButterKnife;
 import demo.soho.com.baogevideo.R;
 import demo.soho.com.baogevideo.model.VideoDescBean;
 import demo.soho.com.baogevideo.model.VideoListBean;
+import demo.soho.com.baogevideo.ui.activity.search.VideoTagActivity;
 import demo.soho.com.baogevideo.ui.adapter.common.HeaderViewRecyclerAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerCommonAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerViewHolder;
@@ -42,6 +49,7 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
     SwipeRefreshLayout refreshLayout;
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
+
     List<VideoListBean.DataBean> videoList = new ArrayList<>();
     private RecyclerCommonAdapter<VideoListBean.DataBean> adapter;
     private Context mContext;
@@ -65,6 +73,14 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
     private static final int SPREAD_STATE = 2;// 展开状态
     private static int mState = SHRINK_UP_STATE;//默认收起状态
     private String isCollect;
+    private TextView channelUpdata;
+    private TextView channelDesc;
+    private TextView channelName;
+    private SimpleDraweeView channelAva;
+    private TagFlowLayout channelTags;
+    private List<String> videoTags = new ArrayList<>();
+    private RelativeLayout videoShare;
+    private Drawable drawable;
 
     @Override
     public void onAttach(Context context) {
@@ -113,11 +129,17 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
         tvCollect = (TextView) headView.findViewById(R.id.tv_collect);
         tvShare = (TextView) headView.findViewById(R.id.tv_video_share_num);
         videoTag = (TagFlowLayout) headView.findViewById(R.id.tags_layout);
+        videoShare = (RelativeLayout) headView.findViewById(R.id.video_share_btn);
+
+        channelAva = (SimpleDraweeView) headView.findViewById(R.id.channel_author_img);
+        channelName = (TextView) headView.findViewById(R.id.tv_channel_name);
+        channelDesc = (TextView) headView.findViewById(R.id.tv_channel_desc);
+        channelUpdata = (TextView) headView.findViewById(R.id.tv_channel_updata);
+        channelTags = (TagFlowLayout) headView.findViewById(R.id.tags_layout);
 
         videoName.setOnClickListener(this);
         tvCollect.setOnClickListener(this);
-        tvShare.setOnClickListener(this);
-
+        videoShare.setOnClickListener(this);
 
         mAdapter.addHeaderView(headView);
     }
@@ -132,7 +154,34 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
         videoInfo.setText(videoInfoBean.getData().getIntro());
         tvCollect.setText(videoInfoBean.getData().getCollects());
 
+        channelAva.setImageURI(Uri.parse(videoInfoBean.getData().getChannel_pic_url()));
+        channelName.setText(videoInfoBean.getData().getChannel_name());
+        channelDesc.setText(videoInfoBean.getData().getChannel_intro());
+        channelUpdata.setText(videoInfoBean.getData().getChannel_update_time());
+
         isCollect = videoInfoBean.getData().getIs_collect();
+        if(videoInfoBean.getData().getTags().size() > 0){
+            for(int i = 0; i < videoInfoBean.getData().getTags().size(); i++){
+                videoTags.add(videoInfoBean.getData().getTags().get(i).getName());
+            }
+        }
+        channelTags.setAdapter(new TagAdapter<String>(videoTags) {
+            @Override
+            public View getView(FlowLayout parent, int position, String s) {
+                TextView mTags = (TextView)LayoutInflater.from(getActivity()).inflate(R.layout.layout_tags_item,parent,false);
+                mTags.setText(s);
+                return mTags;
+            }
+        });
+
+        //事件,点击标签时的回调
+        channelTags.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                mContext.startActivity(new Intent(mContext,VideoTagActivity.class).putExtra("keyword",videoTags.get(position)));
+                return true;
+            }
+        });
     }
 
     private void getData() {
@@ -180,35 +229,43 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     @Override
-    public void onRefresh() {}
+    public void onRefresh() {
+        refreshLayout.setRefreshing(false);
+    }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_video_name:
+            case R.id.video_title:
                 if(mState == SPREAD_STATE){
                     videoInfo.setMaxLines(VIDEO_CONTENT_DESC_MAX_LINE);
                     videoInfo.requestLayout();
                     mState = SHRINK_UP_STATE;
+                    drawable = getResources().getDrawable(R.drawable.unfold);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 }else if(mState == SHRINK_UP_STATE){
                     videoInfo.setMaxLines(Integer.MAX_VALUE);
                     videoInfo.requestLayout();
                     mState = SPREAD_STATE;
+                    drawable = getResources().getDrawable(R.drawable.fold);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 }
+                videoName.setCompoundDrawables(null, null,drawable, null);
                 break;
 
             case R.id.tv_collect:
-                Toast.makeText(mContext, "点击收藏按钮", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
                 break;
-            
+
             case R.id.tv_video_download:
                 Toast.makeText(mContext, "暂时没有缓存权限", Toast.LENGTH_SHORT).show();
                 break;
-            
-            case R.id.video_share_icon:
-                Toast.makeText(mContext, "点击分享", Toast.LENGTH_SHORT).show();
+
+            case R.id.video_share_btn:
+                Toast.makeText(mContext, "暂无权限", Toast.LENGTH_SHORT).show();
                 break;
+
         }
     }
 }
