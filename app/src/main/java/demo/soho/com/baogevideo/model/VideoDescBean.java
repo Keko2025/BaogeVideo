@@ -1,5 +1,9 @@
 package demo.soho.com.baogevideo.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +11,7 @@ import java.util.List;
  * @data 2018/1/20.
  */
 
-public class VideoDescBean {
+public class VideoDescBean implements Parcelable{
 
     /**
      * data : {"add_time":"1516421471","caches":"2","channel_id":"24","channel_intro":"从篮球转投健美，一路走来，外界质疑与夸赞不断，用无比对称、比例协调的肌肉体型征服观众与裁判，7届奥冠证明了西斯的实力（2011-2017奥赛无差别级冠军）","channel_name":"菲尔西斯","channel_pic":"118","channel_pic_url":"http://videos.baoge.tv/Uploads/Picture/2017-12-18/5a37cb474744a.jpg","channel_update_time":"1514301484","code":"cneCPv","collects":"4","comments":"2","file":"90","file_url":"http://videos.baoge.tv/Uploads/Download/2017-12-19/5a392e4f5cfc8.mp4","id":"32","intro":"菲尔.西斯的三角肌训练，来自YouTube频道FlexPlusTV","is_cnword":"1","is_collect":"0","is_commend":"0","lastplay_time":"1516463488","length":"6:30","likes":"0","pic":"172","pic_url":"http://videos.baoge.tv/Uploads/Picture/2017-12-20/5a39bdca66b13.jpg","play":"711","shares":"8","tag_ids":"343,380,381,382,517","tags":[{"id":"517","name":"阿诺德推举"},{"id":"380","name":"反飞鸟"},{"id":"381","name":"肩部"},{"id":"382","name":"三角肌"},{"id":"343","name":"西斯"}],"thumb_pic":"173","thumb_pic_url":"http://videos.baoge.tv/Uploads/Picture/2017-12-20/5a39bdca66b13_thumb.jpg","title":"菲尔西斯的三角肌训练","update_time":"1516421471"}
@@ -53,7 +57,9 @@ public class VideoDescBean {
         this.url = url;
     }
 
-    public static class DataBean {
+
+
+    public static class DataBean implements Parcelable {
         /**
          * add_time : 1516421471
          * caches : 2
@@ -119,6 +125,7 @@ public class VideoDescBean {
         private String title;
         private String update_time;
         private List<TagsBean> tags;
+
 
         public String getAdd_time() {
             return add_time;
@@ -368,7 +375,7 @@ public class VideoDescBean {
             this.tags = tags;
         }
 
-        public static class TagsBean {
+        public static class TagsBean  implements Parcelable {
             /**
              * id : 517
              * name : 阿诺德推举
@@ -392,6 +399,163 @@ public class VideoDescBean {
             public void setName(String name) {
                 this.name = name;
             }
+
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.id);
+                dest.writeString(this.name);
+            }
+
+            public TagsBean() {
+            }
+
+            protected TagsBean(Parcel in) {
+                this.id = in.readString();
+                this.name = in.readString();
+            }
+
+            public static final Creator<TagsBean> CREATOR = new Creator<TagsBean>() {
+                @Override
+                public TagsBean createFromParcel(Parcel source) {
+                    return new TagsBean(source);
+                }
+
+                @Override
+                public TagsBean[] newArray(int size) {
+                    return new TagsBean[size];
+                }
+            };
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.add_time);
+            dest.writeString(this.caches);
+            dest.writeString(this.channel_id);
+            dest.writeString(this.channel_intro);
+            dest.writeString(this.channel_name);
+            dest.writeString(this.channel_pic);
+            dest.writeString(this.channel_pic_url);
+            dest.writeString(this.channel_update_time);
+            dest.writeString(this.code);
+            dest.writeString(this.collects);
+            dest.writeString(this.comments);
+            dest.writeString(this.file);
+            dest.writeString(this.file_url);
+            dest.writeString(this.id);
+            dest.writeString(this.intro);
+            dest.writeString(this.is_cnword);
+            dest.writeString(this.is_collect);
+            dest.writeString(this.is_commend);
+            dest.writeString(this.lastplay_time);
+            dest.writeString(this.length);
+            dest.writeString(this.likes);
+            dest.writeString(this.pic);
+            dest.writeString(this.pic_url);
+            dest.writeString(this.play);
+            dest.writeString(this.shares);
+            dest.writeString(this.tag_ids);
+            dest.writeString(this.thumb_pic);
+            dest.writeString(this.thumb_pic_url);
+            dest.writeString(this.title);
+            dest.writeString(this.update_time);
+            dest.writeList(this.tags);
+        }
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.add_time = in.readString();
+            this.caches = in.readString();
+            this.channel_id = in.readString();
+            this.channel_intro = in.readString();
+            this.channel_name = in.readString();
+            this.channel_pic = in.readString();
+            this.channel_pic_url = in.readString();
+            this.channel_update_time = in.readString();
+            this.code = in.readString();
+            this.collects = in.readString();
+            this.comments = in.readString();
+            this.file = in.readString();
+            this.file_url = in.readString();
+            this.id = in.readString();
+            this.intro = in.readString();
+            this.is_cnword = in.readString();
+            this.is_collect = in.readString();
+            this.is_commend = in.readString();
+            this.lastplay_time = in.readString();
+            this.length = in.readString();
+            this.likes = in.readString();
+            this.pic = in.readString();
+            this.pic_url = in.readString();
+            this.play = in.readString();
+            this.shares = in.readString();
+            this.tag_ids = in.readString();
+            this.thumb_pic = in.readString();
+            this.thumb_pic_url = in.readString();
+            this.title = in.readString();
+            this.update_time = in.readString();
+            this.tags = new ArrayList<TagsBean>();
+            in.readList(this.tags, TagsBean.class.getClassLoader());
+        }
+
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.data, flags);
+        dest.writeString(this.msg);
+        dest.writeInt(this.status);
+        dest.writeString(this.url);
+    }
+
+    public VideoDescBean() {
+    }
+
+    protected VideoDescBean(Parcel in) {
+        this.data = in.readParcelable(DataBean.class.getClassLoader());
+        this.msg = in.readString();
+        this.status = in.readInt();
+        this.url = in.readString();
+    }
+
+    public static final Creator<VideoDescBean> CREATOR = new Creator<VideoDescBean>() {
+        @Override
+        public VideoDescBean createFromParcel(Parcel source) {
+            return new VideoDescBean(source);
+        }
+
+        @Override
+        public VideoDescBean[] newArray(int size) {
+            return new VideoDescBean[size];
+        }
+    };
 }

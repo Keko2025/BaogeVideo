@@ -37,7 +37,6 @@ import demo.soho.com.baogevideo.model.VideoDescBean;
 import demo.soho.com.baogevideo.ui.fragment.home.VideoCommentFragment;
 import demo.soho.com.baogevideo.ui.fragment.home.VideoInfoFragment;
 import demo.soho.com.baogevideo.ui.widget.LandLayoutVideo;
-import demo.soho.com.baogevideo.util.Constants;
 import demo.soho.com.baogevideo.util.L;
 import demo.soho.com.baogevideo.util.TabUtil;
 import demo.soho.com.baogevideo.util.http.OkHttpUtil;
@@ -126,8 +125,10 @@ public class VideoDesActivity extends AppCompatActivity {
         list.add(videoInfoFragment);
         list.add(videoCommentFragment);
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.KEY, "videoBean");
+        bundle.putParcelable("videoInfoBean",videoBean);
+
         bundle.putString("videoId", videoId);
+        bundle.putString("channelId",videoBean.getData().getChannel_id());
 
         videoInfoFragment.setArguments(bundle);
         videoCommentFragment.setArguments(bundle);
@@ -256,8 +257,8 @@ public class VideoDesActivity extends AppCompatActivity {
                         }
                     }
                 }).build(detailPlayer);
-            detailPlayer.startPlayLogic();
-            L.e("wifi:" + "播放");
+        detailPlayer.startPlayLogic();
+        L.e("wifi:" + "播放");
         detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
