@@ -21,5 +21,7 @@ public class Url {
     public static String VIDEO_COMMONT = BASE_URL + "index.php?s=/Comments/index";
     //排行
     public static String VIDEO_WEEK_RANK = BASE_URL + "index.php?s=/Video/ranking";
+    //精选频道api
+    public static String VIDEO_CHANNEL_API = BASE_URL + "index.php?s=/Channel/index";
 
 }

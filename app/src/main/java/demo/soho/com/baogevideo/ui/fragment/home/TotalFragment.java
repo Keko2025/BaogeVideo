@@ -159,6 +159,7 @@ public class TotalFragment extends BaseFragment implements SwipeRefreshLayout.On
                 refreshLayout.setRefreshing(false);
                 VideoListBean videoBean = new Gson().fromJson(data,VideoListBean.class);
                 if(videoBean.getData().size() > 0){
+                    loadMoreView.setVisibility(View.GONE);
                     if(page == 1 && videoList.size() > 0){
                         videoList.clear();
                     }

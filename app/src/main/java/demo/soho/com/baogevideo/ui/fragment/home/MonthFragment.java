@@ -98,8 +98,9 @@ public class MonthFragment extends BaseFragment implements SwipeRefreshLayout.On
             }
         });
         mAdapter = new HeaderViewRecyclerAdapter(adapter);
-        createLoadMoreView();
         recyclerView.setAdapter(mAdapter);
+        createLoadMoreView();
+
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             public int lastVisibleItem;
             @Override
@@ -110,8 +111,8 @@ public class MonthFragment extends BaseFragment implements SwipeRefreshLayout.On
                     initData();
                     loadMoreView.setVisibility(View.VISIBLE);
                 }
-
             }
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -130,7 +131,6 @@ public class MonthFragment extends BaseFragment implements SwipeRefreshLayout.On
         loadingTv = (TextView)loadMoreView.findViewById(R.id.load_tv);
         loadPg = (CircleProgressView)loadMoreView.findViewById(R.id.load_pro);
         mAdapter.addFooterView(loadMoreView);
-        loadMoreView.setVisibility(View.GONE);
     }
     @Override
     protected void initData() {
@@ -159,6 +159,7 @@ public class MonthFragment extends BaseFragment implements SwipeRefreshLayout.On
                 refreshLayout.setRefreshing(false);
                 VideoListBean videoBean = new Gson().fromJson(data,VideoListBean.class);
                 if(videoBean.getData().size() > 0){
+                    loadMoreView.setVisibility(View.GONE);
                     if(page == 1 && videoList.size() > 0){
                         videoList.clear();
                     }

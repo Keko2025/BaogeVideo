@@ -11,12 +11,11 @@
         android:paddingLeft="@dimen/dimen_10"
         android:paddingTop="@dimen/dimen_15"
         android:paddingRight="@dimen/dimen_10"
+        android:ellipsize="end"
         android:text=""
         android:textSize="@dimen/text_16"
         android:singleLine="true"
         android:textColor="#222222"
-        android:maxLines="2"
-        android:ellipsize="end"
         android:onClick="videoInfo"
         android:drawableRight="@drawable/unfold"
         />
@@ -43,6 +42,7 @@
         android:paddingTop="@dimen/dimen_3"
         android:paddingBottom="@dimen/dimen_3"
         android:ellipsize="end"
+        android:maxLines="2"
         android:text=""
         android:textSize="@dimen/text_13"
         android:textColor="#6c6c6c"
@@ -137,6 +137,7 @@
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_1"

@@ -130,7 +130,6 @@ public class WeekFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         loadingTv = (TextView)loadMoreView.findViewById(R.id.load_tv);
         loadPg = (CircleProgressView)loadMoreView.findViewById(R.id.load_pro);
         mAdapter.addFooterView(loadMoreView);
-        loadMoreView.setVisibility(View.GONE);
     }
     @Override
     protected void initData() {
@@ -159,6 +158,7 @@ public class WeekFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 refreshLayout.setRefreshing(false);
                 VideoListBean videoBean = new Gson().fromJson(data,VideoListBean.class);
                 if(videoBean.getData().size() > 0){
+                    loadMoreView.setVisibility(View.GONE);
                     if(page == 1 && videoList.size() > 0){
                         videoList.clear();
                     }

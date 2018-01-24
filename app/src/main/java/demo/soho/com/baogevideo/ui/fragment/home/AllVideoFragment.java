@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -26,6 +27,7 @@ import demo.soho.com.baogevideo.ui.adapter.common.HeaderViewRecyclerAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerCommonAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerViewHolder;
 import demo.soho.com.baogevideo.ui.fragment.base.BaseFragment;
+import demo.soho.com.baogevideo.ui.widget.CircleProgressView;
 import demo.soho.com.baogevideo.util.L;
 import demo.soho.com.baogevideo.util.http.OkHttpUtil;
 import demo.soho.com.baogevideo.util.http.Url;
@@ -50,6 +52,8 @@ public class AllVideoFragment extends BaseFragment implements SwipeRefreshLayout
     private LinearLayoutManager layoutManager;
     private HeaderViewRecyclerAdapter mAdapter;
     private View loadMoreView;
+    private TextView loadingTv;
+    private CircleProgressView loadPg;
 
     @Override
     public void onAttach(Context context) {
@@ -124,8 +128,9 @@ public class AllVideoFragment extends BaseFragment implements SwipeRefreshLayout
             return;
         }
         loadMoreView = LayoutInflater.from(mContext).inflate(R.layout.layout_load_more, recyclerView, false);
+        loadingTv = (TextView)loadMoreView.findViewById(R.id.load_tv);
+        loadPg = (CircleProgressView)loadMoreView.findViewById(R.id.load_pro);
         mAdapter.addFooterView(loadMoreView);
-        loadMoreView.setVisibility(View.GONE);
     }
 
     /**
@@ -160,12 +165,15 @@ public class AllVideoFragment extends BaseFragment implements SwipeRefreshLayout
             public void onSuccess(String data) {
                 L.e("response:" + data);
                 refreshLayout.setRefreshing(false);
-                loadMoreView.setVisibility(View.GONE);
                 VideoListBean videoBean = new Gson().fromJson(data,VideoListBean.class);
                 if(videoBean.getData().size() > 0){
+                    loadMoreView.setVisibility(View.GONE);
                     if(page == 1 && videoList.size() > 0){
                         videoList.clear();
                     }
+                }else {
+                    loadingTv.setText(R.string.load_finish);
+                    loadPg.setVisibility(View.GONE);
                 }
                 videoList.addAll(videoBean.getData());
                 adapter.notifyDataSetChanged();

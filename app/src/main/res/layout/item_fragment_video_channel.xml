@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dimen_14"
+    android:paddingRight="@dimen/dimen_14"
+    android:paddingTop="@dimen/dimen_5"
+    android:paddingBottom="@dimen/dimen_5">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/channel_author_ava"
+        android:layout_width="@dimen/dimen_60"
+        android:layout_height="@dimen/dimen_60"
+        android:layout_margin="@dimen/dimen_10"
+        fresco:roundAsCircle="true"
+        fresco:roundingBorderWidth="@dimen/dimen_2"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:placeholderImage= "@drawable/ic_launcher"
+        fresco:placeholderImageScaleType="fitCenter"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/channel_author_ava"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_centerVertical="true"
+        >
+        <TextView
+            android:id="@+id/tv_channel_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="杰西小姐姐"
+            android:textColor="#222222"
+            android:textSize="@dimen/text_14"/>
+
+        <TextView
+            android:id="@+id/tv_updata_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="2018-01-21"
+            android:textSize="@dimen/text_9"
+            />
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_channel_name"
+            android:textSize="@dimen/text_9"
+            android:textColor="@color/text_color"
+            android:text="1个视频"
+            android:drawablePadding="@dimen/dimen_5"
+            android:drawableLeft="@drawable/video_count_icon"/>
+
+        <TextView
+            android:id="@+id/tv_channel_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_num"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_13"
+            android:text="杰西·格拉夫（Jessie Graff），特技女星，因参加美国“忍者勇士跑道”比赛出名。"
+            android:singleLine="true"/>
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1"
+        android:background="@color/lightgrey"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

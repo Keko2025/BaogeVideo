@@ -137,6 +137,7 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
         channelUpdata = (TextView) headView.findViewById(R.id.tv_channel_updata);
         channelTags = (TagFlowLayout) headView.findViewById(R.id.tags_layout);
 
+        videoInfo.setOnClickListener(this);
         videoName.setOnClickListener(this);
         tvCollect.setOnClickListener(this);
         videoShare.setOnClickListener(this);
@@ -233,10 +234,10 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
         refreshLayout.setRefreshing(false);
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.tv_video_info:
             case R.id.video_title:
                 if(mState == SPREAD_STATE){
                     videoInfo.setMaxLines(VIDEO_CONTENT_DESC_MAX_LINE);
@@ -265,7 +266,6 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
             case R.id.video_share_btn:
                 Toast.makeText(mContext, "暂无权限", Toast.LENGTH_SHORT).show();
                 break;
-
         }
     }
 }

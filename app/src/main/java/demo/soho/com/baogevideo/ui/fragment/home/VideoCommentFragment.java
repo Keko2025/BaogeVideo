@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -22,11 +24,12 @@ import butterknife.ButterKnife;
 import demo.soho.com.baogevideo.R;
 import demo.soho.com.baogevideo.model.VideoCommentBean;
 import demo.soho.com.baogevideo.model.VideoDescBean;
-import demo.soho.com.baogevideo.ui.activity.home.CommentDescActivity;
 import demo.soho.com.baogevideo.ui.activity.home.UserZoneActivity;
+import demo.soho.com.baogevideo.ui.adapter.common.HeaderViewRecyclerAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerCommonAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerViewHolder;
 import demo.soho.com.baogevideo.ui.fragment.base.BaseFragment;
+import demo.soho.com.baogevideo.ui.widget.CircleProgressView;
 import demo.soho.com.baogevideo.util.L;
 import demo.soho.com.baogevideo.util.http.OkHttpUtil;
 import demo.soho.com.baogevideo.util.http.Url;
@@ -48,6 +51,10 @@ public class VideoCommentFragment extends BaseFragment implements SwipeRefreshLa
     private int pageno = 10;
     List<VideoCommentBean.DataBean> commentList = new ArrayList<>();
     private RecyclerCommonAdapter<VideoCommentBean.DataBean> adapter;
+    private HeaderViewRecyclerAdapter mAdapter;
+    private View loadMoreView;
+    private TextView loadingTv;
+    private CircleProgressView loadingPro;
 
     @Override
     public void onAttach(Context context) {
@@ -111,14 +118,39 @@ public class VideoCommentFragment extends BaseFragment implements SwipeRefreshLa
                 });
             }
         };
-        adapter.setOnItemClickListener(new RecyclerCommonAdapter.OnItemClickListener() {
+        mAdapter = new HeaderViewRecyclerAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
+        createLoadMoreView();
+
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            public int lastVisibleItem;
             @Override
-            public void onItemClick(View view, int position) {
-                startActivity(new Intent(mContext,CommentDescActivity.class));
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mAdapter.getItemCount()){
+                    page++;
+                    initData();
+                    loadMoreView.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(layoutManager instanceof LinearLayoutManager){       //获取最后一个可见view的位置
+                    lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                }
             }
         });
-        recyclerView.setAdapter(adapter);
     }
+
+    private void createLoadMoreView() {
+        loadMoreView = LayoutInflater.from(mContext).inflate(R.layout.layout_load_more, recyclerView, false);
+        loadingTv = (TextView)loadMoreView.findViewById(R.id.load_tv);
+        loadingPro = (CircleProgressView)loadMoreView.findViewById(R.id.load_pro);
+        mAdapter.addFooterView(loadMoreView);
+        loadMoreView.setVisibility(View.GONE);
+    }
+
     private void getData() {
         Bundle bundle = getArguments();
         if(bundle != null){
@@ -140,12 +172,16 @@ public class VideoCommentFragment extends BaseFragment implements SwipeRefreshLa
                 refreshLayout.setRefreshing(false);
                 VideoCommentBean videoCommentBean = new Gson().fromJson(data,VideoCommentBean.class);
                 if(videoCommentBean != null && videoCommentBean.getData().size() > 0){
+                    loadMoreView.setVisibility(View.GONE);
                     if(page == 1 && commentList.size() > 0){
                         commentList.clear();
                     }
-                    commentList.addAll(videoCommentBean.getData());
-                    adapter.notifyDataSetChanged();
+                }else {
+                    loadingPro.setVisibility(View.GONE);
+                    loadingTv.setText(R.string.load_finish);
                 }
+                commentList.addAll(videoCommentBean.getData());
+                adapter.notifyDataSetChanged();
             }
 
             @Override
