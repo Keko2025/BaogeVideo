@@ -23,5 +23,11 @@ public class Url {
     public static String VIDEO_WEEK_RANK = BASE_URL + "index.php?s=/Video/ranking";
     //精选频道api
     public static String VIDEO_CHANNEL_API = BASE_URL + "index.php?s=/Channel/index";
+    //频道详情
+    public static String VIDEO_CHANNEL_DESC_API = BASE_URL + "index.php?s=/Channel/detail";
+    //频道热门排名
+    public static String VIDEO_CHANNEL_HOT = BASE_URL + "index.php?s=/Video/index";
+    //频道时间排名
+    public static String VIDEO_CHANNEL_TIME = BASE_URL + "index.php?s=/Video/index";
 
 }

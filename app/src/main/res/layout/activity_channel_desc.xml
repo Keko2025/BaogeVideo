@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        style="@style/style_common_width_height_mw"
+        >
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_layout"
+            style="@style/style_common_width_height_mw"
+            app:collapsedTitleTextAppearance="@color/colorPrimary"
+            app:expandedTitleMarginEnd="48dp"
+            app:expandedTitleTextAppearance="@style/CollapsingToolbarTitleStyle.About"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:collapsedTitleGravity="left"
+            app:contentScrim="#222222"
+            app:statusBarScrim="@color/colorPrimary"
+            >
+            <RelativeLayout
+                android:id="@+id/rl_channel_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_collapseMode="pin"
+                app:layout_collapseParallaxMultiplier="0.7"
+                >
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/channel_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="202dp"
+                    android:layout_gravity="center"
+                    fresco:roundingBorderWidth="@dimen/dimen_2"
+                    fresco:actualImageScaleType="focusCrop"
+                    android:background="@color/black"
+                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="200dp"
+                    android:background="@color/white"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_channel_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="120dp"
+                        android:layout_marginTop="@dimen/dimen_15"
+                        android:text="赛亚人悟空"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/text_13"/>
+
+                    <TextView
+                        android:id="@+id/tv_channel_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="120dp"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:layout_below="@+id/tv_channel_name"
+                        android:text="1个视频 | 7个收藏 | 4次分享"
+                        android:textSize="@dimen/text_11"/>
+                    <TextView
+                        android:id="@+id/tv_channel_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_channel_data"
+                        android:layout_marginLeft="@dimen/dimen_15"
+                        android:layout_marginRight="@dimen/dimen_15"
+                        android:layout_marginTop="@dimen/dimen_15"
+                        android:textSize="@dimen/text_12"
+                        android:text="杰西·格拉夫（Jessie Graff），特技女星，因参加美国“忍者勇士跑道”比赛出名。"
+                        />
+                </RelativeLayout>
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/channel_author_ava"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_gravity="center"
+                    fresco:roundAsCircle="true"
+                    fresco:roundingBorderWidth="@dimen/dimen_2"
+                    fresco:actualImageScaleType="focusCrop"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginTop="180dp"
+                    />
+            </RelativeLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:paddingRight="@dimen/dimen_5"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                >
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_16"
+                    android:singleLine="true"
+                    android:visibility="gone"
+                    />
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/toolbar_tab"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:background="#ffffff"
+            android:fillViewport="false"
+            app:layout_scrollFlags="scroll"
+            app:tabIndicatorColor="@color/black"
+            app:tabIndicatorHeight="2.0dp"
+            app:tabSelectedTextColor="@color/black"
+            app:tabTextColor="#333333"
+            >
+            <android.support.design.widget.TabItem
+                style="@style/style_common_width_height_mm"
+                android:text="火热排序"
+                />
+            <android.support.design.widget.TabItem
+                style="@style/style_common_width_height_mm"
+                android:text="时间排序" />
+
+        </android.support.design.widget.TabLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        style="@style/style_common_width_height_mm"
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+</android.support.design.widget.CoordinatorLayout>

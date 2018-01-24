@@ -44,7 +44,7 @@ public class MonthFragment extends BaseFragment implements SwipeRefreshLayout.On
     RecyclerView recyclerView;
 
     private Context mContext;
-    private int page = 0;
+    private int page = 1;
     private int pageno = 10;
     List<VideoListBean.DataBean> videoList = new ArrayList<>();
     private RecyclerCommonAdapter<VideoListBean.DataBean> adapter;
@@ -81,7 +81,7 @@ public class MonthFragment extends BaseFragment implements SwipeRefreshLayout.On
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new RecyclerCommonAdapter<VideoListBean.DataBean>(mContext,videoList,R.layout.fragment_home_video) {
+        adapter = new RecyclerCommonAdapter<VideoListBean.DataBean>(mContext,videoList,R.layout.item_fragment_home_video) {
             @Override
             public void convert(RecyclerViewHolder holder, VideoListBean.DataBean item, int position) {
                 holder.setText(R.id.tv_video_name,item.getTitle());

@@ -197,7 +197,7 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
         getData();
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("r",10);
-        parameters.put("p",0);
+        parameters.put("p",1);
         parameters.put("channel_id",videoInfoBean.getData().getChannel_id());
         new OkHttpUtil().post(Url.VIDEO_RELATED, parameters, new OkHttpUtil.HttpCallback() {
             @Override

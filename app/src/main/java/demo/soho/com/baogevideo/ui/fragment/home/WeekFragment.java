@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,7 +44,7 @@ public class WeekFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     RecyclerView recyclerView;
 
     private Context mContext;
-    private int page = 0;
+    private int page = 1;
     private int pageno = 10;
     List<VideoListBean.DataBean> videoList = new ArrayList<>();
     private RecyclerCommonAdapter<VideoListBean.DataBean> adapter;
@@ -81,7 +80,7 @@ public class WeekFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new RecyclerCommonAdapter<VideoListBean.DataBean>(mContext,videoList,R.layout.fragment_home_video) {
+        adapter = new RecyclerCommonAdapter<VideoListBean.DataBean>(mContext,videoList,R.layout.item_fragment_home_video) {
             @Override
             public void convert(RecyclerViewHolder holder, VideoListBean.DataBean item, int position) {
                 holder.setText(R.id.tv_video_name,item.getTitle());

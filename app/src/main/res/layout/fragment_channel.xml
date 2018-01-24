@@ -8,9 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
         android:text="频道精选"
-        android:textSize="@dimen/text_15"
+        android:textSize="@dimen/text_16"
         android:textColor="@color/text_red"
         android:gravity="center"
+        android:textStyle="italic"
         />
     <TextView
         android:layout_width="match_parent"

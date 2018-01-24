@@ -98,5 +98,9 @@
     <dimen name="dimen_74">74dp</dimen>
     <dimen name="dimen_75">75dp</dimen>
     <dimen name="dimen_128">128dp</dimen>
+    <dimen name="dimen_168">168dp</dimen>
+    <dimen name="dimen_210">210dp</dimen>
+    <dimen name="dimen_220">220dp</dimen>
+
 
 </resources>

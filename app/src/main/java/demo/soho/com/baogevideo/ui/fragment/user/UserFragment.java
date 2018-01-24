@@ -3,6 +3,7 @@ package demo.soho.com.baogevideo.ui.fragment.user;
 import android.os.Bundle;
 import android.view.View;
 
+import butterknife.ButterKnife;
 import demo.soho.com.baogevideo.R;
 import demo.soho.com.baogevideo.ui.fragment.base.BaseFragment;
 
@@ -19,7 +20,7 @@ public class UserFragment extends BaseFragment{
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-
+        ButterKnife.bind(this,view);
     }
 
     @Override

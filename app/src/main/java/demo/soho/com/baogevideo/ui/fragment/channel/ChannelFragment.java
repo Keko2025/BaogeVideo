@@ -1,6 +1,7 @@
 package demo.soho.com.baogevideo.ui.fragment.channel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import demo.soho.com.baogevideo.R;
 import demo.soho.com.baogevideo.model.VideoChannelBean;
+import demo.soho.com.baogevideo.ui.activity.channel.ChannelDescActivity;
 import demo.soho.com.baogevideo.ui.adapter.common.HeaderViewRecyclerAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerCommonAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerViewHolder;
@@ -95,7 +97,12 @@ public class ChannelFragment extends BaseFragment implements SwipeRefreshLayout.
         mAdapter = new HeaderViewRecyclerAdapter(adapter);
         recyclerView.setAdapter(mAdapter);
         createLoadMoreView();
-
+        adapter.setOnItemClickListener(new RecyclerCommonAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                startActivity(new Intent(mContext,ChannelDescActivity.class).putExtra("channelId",channelList.get(position).getId()));
+            }
+        });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             public int lastVisibleItem;
             @Override
@@ -139,6 +146,7 @@ public class ChannelFragment extends BaseFragment implements SwipeRefreshLayout.
             @Override
             public void onSuccess(String data) {
                 refreshLayout.setRefreshing(false);
+                loadMoreView.setVisibility(View.GONE);
                 VideoChannelBean videoChannelBean = new Gson().fromJson(data,VideoChannelBean.class);
                 if(videoChannelBean != null && videoChannelBean.getData().size() > 0){
                     if(page == 1 && videoChannelBean.getData().size() > 0){
