@@ -92,6 +92,7 @@
             android:layout_marginLeft="@dimen/dimen_8"
             android:paddingLeft="@dimen/dimen_10"
             android:paddingRight="@dimen/dimen_7"
+            android:visibility="gone"
             >
             <ImageView
                 android:id="@+id/video_share_icon"

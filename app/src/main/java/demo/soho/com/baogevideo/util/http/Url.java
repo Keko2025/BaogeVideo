@@ -8,7 +8,6 @@ import demo.soho.com.baogevideo.BuildConfig;
  */
 
 public class Url {
-
     public static final String BASE_URL = BuildConfig.URL_HOST;
 
     //首页全部视频api
@@ -29,5 +28,19 @@ public class Url {
     public static String VIDEO_CHANNEL_HOT = BASE_URL + "index.php?s=/Video/index";
     //频道时间排名
     public static String VIDEO_CHANNEL_TIME = BASE_URL + "index.php?s=/Video/index";
+    //获取验证码
+    public static String GET_PHONE_CODE = BASE_URL + "index.php?s=/Member/sendSMS";
+    //完成注册
+    public static String COMPLETE_REGISTER = BASE_URL + "index.php?s=/Member/register";
+    //登录
+    public static String USER_LOGIN_API = BASE_URL + "index.php?s=/Member/login";
+    //视频收藏
+    public static String VIDEO_COLLECT_ADD_API = BASE_URL + "index.php?s=/Collects/add";
+    //我的收藏
+    public static String VIDEO_MY_COLLECT_API = BASE_URL + "index.php?s=/Collects/my";
+    //清空所有缓存列表
+    public static String CLEAR_COLLECT_LIST_API = BASE_URL + "index.php?s=/Collects/del";
+    //退出登录
+    public static String EXIT_APP_API = BASE_URL + "index.php?s=/Member/logout";
 
 }

@@ -4,31 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
-        android:text="频道精选"
-        android:textSize="@dimen/text_16"
+        android:text="我的"
         android:textColor="@color/text_red"
-        android:gravity="center"
-        android:textStyle="normal"
-        />
+        android:textSize="@dimen/text_15"
+        android:gravity="center"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_1"
         android:background="@color/lightgrey"/>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         >
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:scrollbars="vertical"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <include
+                layout="@layout/tab_user_topview"/>
+            <include
+                layout="@layout/tab_user_menuview"/>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

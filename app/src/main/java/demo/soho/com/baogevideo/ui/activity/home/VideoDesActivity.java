@@ -31,6 +31,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import demo.soho.com.baogevideo.BaogeApp;
 import demo.soho.com.baogevideo.R;
 import demo.soho.com.baogevideo.listener.SampleListener;
 import demo.soho.com.baogevideo.model.VideoDescBean;
@@ -38,6 +39,8 @@ import demo.soho.com.baogevideo.ui.fragment.home.VideoCommentFragment;
 import demo.soho.com.baogevideo.ui.fragment.home.VideoInfoFragment;
 import demo.soho.com.baogevideo.ui.widget.LandLayoutVideo;
 import demo.soho.com.baogevideo.util.L;
+import demo.soho.com.baogevideo.util.SpUtil;
+import demo.soho.com.baogevideo.util.StringUtils;
 import demo.soho.com.baogevideo.util.TabUtil;
 import demo.soho.com.baogevideo.util.http.OkHttpUtil;
 import demo.soho.com.baogevideo.util.http.Url;
@@ -65,6 +68,7 @@ public class VideoDesActivity extends AppCompatActivity {
     private VideoInfoFragment videoInfoFragment = null;
     private VideoCommentFragment videoCommentFragment = null;
     private List<String> titles = new ArrayList<>();
+    private String token;
 
 
     @Override
@@ -74,18 +78,28 @@ public class VideoDesActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         progressDialog = new SVProgressHUD(this);
+        token = (String) SpUtil.get(getApplicationContext(), "token", "");
+
         Intent intent = getIntent();
         if (intent != null) {
-            videoId = intent.getStringExtra("videoId");
-            iniData(videoId);
+            videoId = intent.getStringExtra("videoId") != null ? intent.getStringExtra("videoId") : "";
+            if(!StringUtils.isEmptyString(videoId)){
+                iniData(videoId);
+            }
         }
     }
 
+    /**
+     * 获取用户token
+     */
+    private void getUserData() {
+        token = (String) SpUtil.get(BaogeApp.context, "token", "");
+    }
     private void iniData(String videoId) {
         L.e("videoId:"+videoId);
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("id",videoId);
-        parameters.put("token","ffbafc11f95f30402c814b89727af15e");
+        parameters.put("token",token != null ? token : "");
         new OkHttpUtil().post(Url.VIDEO_DESC_API, parameters, new OkHttpUtil.HttpCallback() {
             @Override
             public void onStart() {
@@ -314,6 +328,7 @@ public class VideoDesActivity extends AppCompatActivity {
         getCurPlay().onVideoResume();
         super.onResume();
         isPause = false;
+        getUserData();
     }
 
     @Override

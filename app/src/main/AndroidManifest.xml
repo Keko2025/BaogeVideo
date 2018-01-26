@@ -36,5 +36,12 @@
         <activity android:name=".ui.activity.home.UserZoneActivity"/>
         <activity android:name=".ui.activity.home.CommentDescActivity"/>
         <activity android:name=".ui.activity.channel.ChannelDescActivity"/>
+        <activity android:name=".ui.activity.user.RegisterActivity"/>
+        <activity android:name=".ui.activity.user.RegisterNextActivity"/>
+        <activity android:name=".ui.activity.user.LoginActivity"/>
+        <activity android:name=".ui.activity.user.SetActivity"/>
+        <activity android:name=".ui.activity.user.CollectActivity"/>
+        <activity android:name=".ui.activity.user.VideoCacheActivity"/>
+        <activity android:name=".ui.activity.user.VideoHisActivity"/>
     </application>
 </manifest>

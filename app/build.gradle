@@ -26,6 +26,7 @@ android {
             buildConfigField "String", "URL_HOST", "\"http://api.baoge.tv/\""
         }
     }
+
 }
 
 dependencies {

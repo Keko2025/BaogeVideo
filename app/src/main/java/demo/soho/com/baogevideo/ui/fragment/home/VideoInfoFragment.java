@@ -27,17 +27,24 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import demo.soho.com.baogevideo.BaogeApp;
 import demo.soho.com.baogevideo.R;
+import demo.soho.com.baogevideo.model.CodeBean;
 import demo.soho.com.baogevideo.model.VideoDescBean;
 import demo.soho.com.baogevideo.model.VideoListBean;
+import demo.soho.com.baogevideo.ui.activity.channel.ChannelDescActivity;
+import demo.soho.com.baogevideo.ui.activity.home.VideoDesActivity;
 import demo.soho.com.baogevideo.ui.activity.search.VideoTagActivity;
 import demo.soho.com.baogevideo.ui.adapter.common.HeaderViewRecyclerAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerCommonAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerViewHolder;
 import demo.soho.com.baogevideo.ui.fragment.base.BaseFragment;
 import demo.soho.com.baogevideo.util.L;
+import demo.soho.com.baogevideo.util.SpUtil;
 import demo.soho.com.baogevideo.util.http.OkHttpUtil;
 import demo.soho.com.baogevideo.util.http.Url;
+
+import static android.R.attr.data;
 
 /**
  * @author dell
@@ -81,6 +88,8 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
     private List<String> videoTags = new ArrayList<>();
     private RelativeLayout videoShare;
     private Drawable drawable;
+    private String token;
+    private RelativeLayout relatedChannel;
 
     @Override
     public void onAttach(Context context) {
@@ -108,7 +117,7 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
         layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new RecyclerCommonAdapter<VideoListBean.DataBean>(mContext,videoList,R.layout.fragment_related_video) {
+        adapter = new RecyclerCommonAdapter<VideoListBean.DataBean>(mContext,videoList,R.layout.item_fragment_related_video) {
             @Override
             public void convert(RecyclerViewHolder holder, VideoListBean.DataBean item, int position) {
                 holder.setFrescoImg(R.id.relate_video_img, Uri.parse(item.getThumb_pic_url()));
@@ -116,6 +125,12 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
                 holder.setText(R.id.relate_vedio_time,item.getPlay() + "次播放" + " | " + item.getUpdate_time());
             }
         };
+        adapter.setOnItemClickListener(new RecyclerCommonAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                startActivity(new Intent(mContext, VideoDesActivity.class).putExtra("videoId",videoList.get(position-1).getVideo_id()));
+            }
+        });
         mAdapter = new HeaderViewRecyclerAdapter(adapter);
         recyclerView.setAdapter(mAdapter);
         createHeadView();
@@ -136,11 +151,15 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
         channelDesc = (TextView) headView.findViewById(R.id.tv_channel_desc);
         channelUpdata = (TextView) headView.findViewById(R.id.tv_channel_updata);
         channelTags = (TagFlowLayout) headView.findViewById(R.id.tags_layout);
+        TextView videoCache = (TextView) headView.findViewById(R.id.tv_video_download);
+        relatedChannel = (RelativeLayout) headView.findViewById(R.id.video_details_relative_channel);
 
+        videoCache.setOnClickListener(this);
         videoInfo.setOnClickListener(this);
         videoName.setOnClickListener(this);
         tvCollect.setOnClickListener(this);
         videoShare.setOnClickListener(this);
+        relatedChannel.setOnClickListener(this);
 
         mAdapter.addHeaderView(headView);
     }
@@ -175,14 +194,17 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
             }
         });
 
+        //TODO
         //事件,点击标签时的回调
         channelTags.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
-                mContext.startActivity(new Intent(mContext,VideoTagActivity.class).putExtra("keyword",videoTags.get(position)));
+//                mContext.startActivity(new Intent(mContext,VideoTagActivity.class).putExtra("keyword",videoTags.get(position)));
                 return true;
             }
         });
+
+        channelId = videoInfoBean.getData().getChannel_id();
     }
 
     private void getData() {
@@ -256,7 +278,7 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
                 break;
 
             case R.id.tv_collect:
-                Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
+                collectVideo();
                 break;
 
             case R.id.tv_video_download:
@@ -266,6 +288,57 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
             case R.id.video_share_btn:
                 Toast.makeText(mContext, "暂无权限", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.video_details_relative_channel:
+                startActivity(new Intent(mContext, ChannelDescActivity.class).putExtra("channelId",channelId));
+                break;
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUserData();
+    }
+
+    /**
+     * 获取用户token
+     */
+    private void getUserData() {
+        token = (String) SpUtil.get(BaogeApp.context, "token", "");
+    }
+
+    /**
+     * 视频收藏
+     */
+    private void collectVideo() {
+        Map<String,Object> paramters = new HashMap<>();
+        paramters.put("token",token);
+        paramters.put("video_id",videoInfoBean.getData().getId());
+        new OkHttpUtil().post(Url.VIDEO_COLLECT_ADD_API, paramters, new OkHttpUtil.HttpCallback() {
+            @Override
+            public void onSuccess(String data) {
+                CodeBean codeBean = new Gson().fromJson(data,CodeBean.class);
+                Toast.makeText(mContext, codeBean.getMsg(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                super.onFailure(msg);
+            }
+
+            @Override
+            public void onError(String msg) {
+                super.onError(msg);
+                CodeBean codeBean = new Gson().fromJson(msg,CodeBean.class);
+                Toast.makeText(mContext, codeBean.getMsg(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+        });
+    }
+
+
 }

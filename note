@@ -1,32 +1,204 @@
-SmartTabLayout:
+ //获取验证码
+    public static String GET_PHONE_CODE = BASE_URL + "index.php?s=/Member/sendSMS";
+    POST
+    参数：mobile
+    返回：
+    {"status":1,"msg":"\u53d1\u9001\u77ed\u4fe1\u6210\u529f","url":"","data":[]}
 
-     <com.ogaclejapan.smarttablayout.SmartTabLayout
-            android:id="@+id/tablayout"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            app:stl_indicatorAlwaysInCenter="false"
-            app:stl_indicatorWithoutPadding="true"
-            app:stl_indicatorInFront="false"
-            app:stl_indicatorInterpolation="smart"
-            app:stl_indicatorGravity="bottom"
-            app:stl_indicatorColor="@color/text_red"
-            app:stl_indicatorThickness="2dp"
-            app:stl_indicatorWidth="auto"
-            app:stl_indicatorCornerRadius="2dp"
-            app:stl_overlineColor="@null"
-            app:stl_overlineThickness="0dp"
-            app:stl_dividerColor="#fff"
-            app:stl_dividerThickness="0dp"
-            app:stl_underlineColor="@null"
-            app:stl_underlineThickness="0dp"
-            app:stl_defaultTabBackground="?attr/selectableItemBackground"
-            app:stl_defaultTabTextAllCaps="false"
-            app:stl_defaultTabTextColor="#222222"
-            app:stl_defaultTabTextSize="@dimen/text_14"
-            app:stl_defaultTabTextHorizontalPadding="18dp"
-            app:stl_defaultTabTextMinWidth="0dp"
-            app:stl_distributeEvenly="true"                               //:选项卡tab权重相同,默认false(true：水平权重相同)
-            app:stl_clickable="true"
-            app:stl_titleOffset="24dp"
-            app:stl_drawDecorationAfterTab="false"
-            />
+ //完成注册
+    public static String REGISTER_COMPLETE = BASE_URL + "index.php?s=/Member/register"
+    POST
+    参数：
+    "mobile":"17602142624"
+    "password":""1234qwer"
+    "verify_code":"8315"
+    "username":"豹哥铁管馆长"
+    "device_token":"AjVu6NusGxijUqcuYTFfnoYZQpctF8LPfPXz670nELSz"
+
+ //Level/index
+    index.php?s=/Level/index
+    post
+
+{"status":1,"msg":"","url":"","data":[{"id":"1","name":"LV.0","medal":"\u6beb\u65e0\u8bad\u7ec3\u75d5\u8ff9","score":"0","pic":"0","add_time":"1508762250","status":"1","pic_url":""},{"id":"2","name":"LV.1","medal":"\u5446\u840c\u5065\u8eab\u83dc\u9e21","score":"100","pic":"0","add_time":"1508762250","status":"1","pic_url":""},{"id":"3","name":"LV.2","medal":"\u81c2\u7ef4\u7a81\u783440","score":"300","pic":"0","add_time":"1508762250","status":"1","pic_url":""},{"id":"4","name":"LV.3","medal":"\u5c0f\u578b\u808c\u9738","score":"500","pic":"0","add_time":"1513431501","status":"1","pic_url":""},{"id":"5","name":"LV.4","medal":"\u4e2d\u578b\u808c\u9738","score":"1000","pic":"0","add_time":"1513431597","status":"1","pic_url":""},{"id":"6","name":"LV.5","medal":"\u5de8\u578b\u808c\u9738","score":"2000","pic":"0","add_time":"1513431621","status":"1","pic_url":""},{"id":"7","name":"LV.6","medal":"\u5965\u8d5b\u513f\u7ae5\u7ec4","score":"3000","pic":"0","add_time":"1514119344","status":"1","pic_url":""},{"id":"8","name":"LV.7","medal":"\u5965\u8d5b\u517b\u751f\u7ec4","score":"4000","pic":"0","add_time":"1514120115","status":"1","pic_url":""},{"id":"9","name":"LV.8","medal":"\u5965\u8d5b\u8001\u5e74\u7ec4","score":"5000","pic":"0","add_time":"1514120130","status":"1","pic_url":""},{"id":"10","name":"LV.9","medal":"\u8036\u5df4\u8482\u7956\u5e08\u7237","score":"6000","pic":"0","add_time":"1514120150","status":"1","pic_url":""}]}
+    Json格式化：
+        {
+            "data": [
+                {
+                    "add_time": "1508762250",
+                    "id": "1",
+                    "medal": "毫无训练痕迹",
+                    "name": "LV.0",
+                    "pic": "0",
+                    "pic_url": "",
+                    "score": "0",
+                    "status": "1"
+                },
+                {
+                    "add_time": "1508762250",
+                    "id": "2",
+                    "medal": "呆萌健身菜鸡",
+                    "name": "LV.1",
+                    "pic": "0",
+                    "pic_url": "",
+                    "score": "100",
+                    "status": "1"
+                },
+                {
+                    "add_time": "1508762250",
+                    "id": "3",
+                    "medal": "臂维突破40",
+                    "name": "LV.2",
+                    "pic": "0",
+                    "pic_url": "",
+                    "score": "300",
+                    "status": "1"
+                },
+                {
+                    "add_time": "1513431501",
+                    "id": "4",
+                    "medal": "小型肌霸",
+                    "name": "LV.3",
+                    "pic": "0",
+                    "pic_url": "",
+                    "score": "500",
+                    "status": "1"
+                },
+                {
+                    "add_time": "1513431597",
+                    "id": "5",
+                    "medal": "中型肌霸",
+                    "name": "LV.4",
+                    "pic": "0",
+                    "pic_url": "",
+                    "score": "1000",
+                    "status": "1"
+                },
+                {
+                    "add_time": "1513431621",
+                    "id": "6",
+                    "medal": "巨型肌霸",
+                    "name": "LV.5",
+                    "pic": "0",
+                    "pic_url": "",
+                    "score": "2000",
+                    "status": "1"
+                },
+                {
+                    "add_time": "1514119344",
+                    "id": "7",
+                    "medal": "奥赛儿童组",
+                    "name": "LV.6",
+                    "pic": "0",
+                    "pic_url": "",
+                    "score": "3000",
+                    "status": "1"
+                },
+                {
+                    "add_time": "1514120115",
+                    "id": "8",
+                    "medal": "奥赛养生组",
+                    "name": "LV.7",
+                    "pic": "0",
+                    "pic_url": "",
+                    "score": "4000",
+                    "status": "1"
+                },
+                {
+                    "add_time": "1514120130",
+                    "id": "9",
+                    "medal": "奥赛老年组",
+                    "name": "LV.8",
+                    "pic": "0",
+                    "pic_url": "",
+                    "score": "5000",
+                    "status": "1"
+                },
+                {
+                    "add_time": "1514120150",
+                    "id": "10",
+                    "medal": "耶巴蒂祖师爷",
+                    "name": "LV.9",
+                    "pic": "0",
+                    "pic_url": "",
+                    "score": "6000",
+                    "status": "1"
+                }
+            ],
+            "msg": "",
+            "status": 1,
+            "url": ""
+        }
+
+     //index.php?s=/Likes/fromMeNewcount
+     post
+     "token":"19029fd17bae6574d0b64a181d1514be"
+
+      {"status":1,"msg":"","url":"","data":{"count":"0"}}
+
+
+     //index.php?s=/Comments/atMeNewcount
+     {"status":1,"msg":"","url":"","data":{"count":"0"}}
+
+     //index.php?s=/Member/detail
+     post
+     "token":"19029fd17bae6574d0b64a181d1514be"
+     {"status":1,"msg":"","url":"","data":{"user_id":"1998","openid":"","qq_openid":"","weibo_uid":"","username":"\u8c79\u54e5\u94c1\u7ba1\u9986\u957f","mobile":"17602142624","device_token":"AjVu6NusGxijUqcuYTFfnoYZQpctF8LPfPXz670nELSz","sex":"1","birthday":"1991-01-01","intro":"","height":"0","weight":"0","bfr":"0","pic":"0","score":"0","level_id":"1","level_time":"1970-01-01 08:00:00","grade":"2","is_sure":"0","dumb_time":"1970-01-01 08:00:00","is_push_comments":"1","is_push_likes":"1","read_message_ids":"","del_message_ids":"","login":"1","reg_ip":"1960977902","reg_time":"2018-01-25 16:37:46","last_login_ip":"116.226.37.238","last_login_time":"2018-01-25 16:37:46","lastclick_ats_time":"1516869467","lastclick_likes_time":"1516869467","status":"1","token":"19029fd17bae6574d0b64a181d1514be","pic_url":"","level_name":"LV.0","medal":"\u6beb\u65e0\u8bad\u7ec3\u75d5\u8ff9","level_pic_url":"","next_level_score":"100","age":27}}
+
+        {
+            "data": {
+                "age": 27,
+                "bfr": "0",
+                "birthday": "1991-01-01",
+                "del_message_ids": "",
+                "device_token": "AjVu6NusGxijUqcuYTFfnoYZQpctF8LPfPXz670nELSz",
+                "dumb_time": "1970-01-01 08:00:00",
+                "grade": "2",
+                "height": "0",
+                "intro": "",
+                "is_push_comments": "1",
+                "is_push_likes": "1",
+                "is_sure": "0",
+                "last_login_ip": "116.226.37.238",
+                "last_login_time": "2018-01-25 16:37:46",
+                "lastclick_ats_time": "1516869467",
+                "lastclick_likes_time": "1516869467",
+                "level_id": "1",
+                "level_name": "LV.0",
+                "level_pic_url": "",
+                "level_time": "1970-01-01 08:00:00",
+                "login": "1",
+                "medal": "毫无训练痕迹",
+                "mobile": "17602142624",
+                "next_level_score": "100",
+                "openid": "",
+                "pic": "0",
+                "pic_url": "",
+                "qq_openid": "",
+                "read_message_ids": "",
+                "reg_ip": "1960977902",
+                "reg_time": "2018-01-25 16:37:46",
+                "score": "0",
+                "sex": "1",
+                "status": "1",
+                "token": "19029fd17bae6574d0b64a181d1514be",
+                "user_id": "1998",
+                "username": "豹哥铁管馆长",
+                "weibo_uid": "",
+                "weight": "0"
+            },
+            "msg": "",
+            "status": 1,
+            "url": ""
+        }
+
+    ## //登录Api
+    index.php?s=/Member/login
+    post
+    参数：
+    username
+    password
+    "device_token" : "AjVu6NusGxijUqcuYTFfnoYZQpctF8LPfPXz670nELSz"
+
+
+
+

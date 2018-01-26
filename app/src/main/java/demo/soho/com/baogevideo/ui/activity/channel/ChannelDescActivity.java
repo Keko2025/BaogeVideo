@@ -78,7 +78,7 @@ public class ChannelDescActivity extends AppCompatActivity {
 
         intent = getIntent();
         if(intent != null){
-            channelId = intent.getStringExtra("channelId");
+            channelId = intent.getStringExtra("channelId") != null ? intent.getStringExtra("channelId") : "";
             queryChannelDescData(channelId);
         }
         initTab();

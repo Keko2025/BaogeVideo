@@ -1,6 +1,7 @@
 package demo.soho.com.baogevideo;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -11,9 +12,13 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig;
  * @data 2018/1/20.
  */
 public class BaogeApp extends Application {
+    public static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        context = getApplicationContext();
 
         ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
                 .setDownsampleEnabled(true)
