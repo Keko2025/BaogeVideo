@@ -83,6 +83,7 @@ public class VideoDesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             videoId = intent.getStringExtra("videoId") != null ? intent.getStringExtra("videoId") : "";
+            L.e("接受到：" + videoId);
             if(!StringUtils.isEmptyString(videoId)){
                 iniData(videoId);
             }

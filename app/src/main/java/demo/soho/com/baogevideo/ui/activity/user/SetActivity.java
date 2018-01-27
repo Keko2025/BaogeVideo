@@ -65,6 +65,7 @@ public class SetActivity extends BaseActivity {
                 SpUtil.remove(getApplicationContext(), "token");
                 CodeBean codeBean = new Gson().fromJson(data,CodeBean.class);
                 Toast.makeText(SetActivity.this, codeBean.getMsg(), Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override

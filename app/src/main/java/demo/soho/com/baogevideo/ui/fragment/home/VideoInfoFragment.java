@@ -128,7 +128,8 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
         adapter.setOnItemClickListener(new RecyclerCommonAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(new Intent(mContext, VideoDesActivity.class).putExtra("videoId",videoList.get(position-1).getVideo_id()));
+                L.e("点击videoId:" + videoList.get(position-1).getId());
+                startActivity(new Intent(mContext, VideoDesActivity.class).putExtra("videoId",videoList.get(position-1).getId()));
             }
         });
         mAdapter = new HeaderViewRecyclerAdapter(adapter);
@@ -282,7 +283,7 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
                 break;
 
             case R.id.tv_video_download:
-                Toast.makeText(mContext, "暂时没有缓存权限", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "sorry,暂时没有权限", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.video_share_btn:
