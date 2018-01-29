@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.tencent.bugly.Bugly;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -24,6 +25,8 @@ public class BaogeApp extends Application {
         context = getApplicationContext();
         initFresco();
         initJPush();
+
+        Bugly.init(this, "00f3576606", true);  //TODO,发布时改 false
     }
 
     private void initJPush() {

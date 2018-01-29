@@ -1,7 +1,12 @@
 package demo.soho.com.baogevideo.ui.activity.base;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -10,6 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.allenliu.versionchecklib.core.AllenChecker;
+import com.allenliu.versionchecklib.core.VersionParams;
+import com.allenliu.versionchecklib.core.http.HttpRequestMethod;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +29,8 @@ import demo.soho.com.baogevideo.ui.fragment.home.HomeFragment;
 import demo.soho.com.baogevideo.ui.fragment.user.UserFragment;
 import demo.soho.com.baogevideo.ui.widget.FragmentTabHost;
 import demo.soho.com.baogevideo.util.L;
+import demo.soho.com.baogevideo.util.http.Url;
+import service.UpdataService;
 
 
 public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
@@ -36,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
     private HomeFragment homeFragment;
     private ChannelFragment channelFragment;
     private UserFragment userFragment;
+    private int PERMISSIONS_REQUEST_EXTERNAL_STORAGE = 1234;
+    private Object versionParams;
+    public static MainActivity mainActivity;
+
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -66,6 +81,30 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
         tabhost.setCurrentTab(current);
 
         initEvent();
+        checkPermission();
+        mainActivity = this;
+    }
+
+    private void checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){//如果是6.0以上系统,申请储存权限
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},PERMISSIONS_REQUEST_EXTERNAL_STORAGE);
+            }else{
+                checkVision();
+            }
+        }else{
+            checkVision();
+        }
+    }
+
+    private void checkVision() {
+        VersionParams.Builder builder = new VersionParams.Builder()
+                .setRequestUrl("http://www.baidu.com")
+                .setRequestMethod(HttpRequestMethod.GET)
+                .setCustomDownloadActivityClass(CustomVersionDialogActivity.class)
+                .setPauseRequestTime(-1)
+                .setService(UpdataService.class);
+        AllenChecker.startVersionCheck(this,builder.build());
     }
 
     private void initEvent() {

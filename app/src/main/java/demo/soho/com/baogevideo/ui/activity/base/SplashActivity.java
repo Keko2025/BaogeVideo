@@ -1,13 +1,14 @@
 package demo.soho.com.baogevideo.ui.activity.base;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -15,18 +16,14 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
-
+import java.io.File;
 import java.lang.reflect.Method;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import demo.soho.com.baogevideo.R;
-import demo.soho.com.baogevideo.model.DataBean;
-import demo.soho.com.baogevideo.model.SscBean;
-import demo.soho.com.baogevideo.util.L;
-import demo.soho.com.baogevideo.util.http.OkHttpUtil;
 
 /**
  * @author dell
@@ -54,6 +51,8 @@ public class SplashActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         startAnim();
     }
+
+
 
     @Override
     protected void onStart() {

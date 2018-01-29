@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgrey">
+    android:background="@color/white">
     <RelativeLayout
         android:id="@+id/id_back"
         android:layout_width="match_parent"
@@ -50,6 +50,7 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/select_switch_bg"/>
     </RelativeLayout>
+
     <TextView
         android:id="@+id/id_exit"
         android:layout_width="match_parent"
