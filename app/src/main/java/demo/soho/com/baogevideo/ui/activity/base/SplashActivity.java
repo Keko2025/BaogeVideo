@@ -52,8 +52,6 @@ public class SplashActivity extends AppCompatActivity {
         startAnim();
     }
 
-
-
     @Override
     protected void onStart() {
         //调用配置

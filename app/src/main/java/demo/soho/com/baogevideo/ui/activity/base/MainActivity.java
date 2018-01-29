@@ -1,9 +1,13 @@
 package demo.soho.com.baogevideo.ui.activity.base;
 
 import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +24,10 @@ import com.allenliu.versionchecklib.core.AllenChecker;
 import com.allenliu.versionchecklib.core.VersionParams;
 import com.allenliu.versionchecklib.core.http.HttpRequestMethod;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import demo.soho.com.baogevideo.R;
@@ -31,6 +39,8 @@ import demo.soho.com.baogevideo.ui.widget.FragmentTabHost;
 import demo.soho.com.baogevideo.util.L;
 import demo.soho.com.baogevideo.util.http.Url;
 import service.UpdataService;
+
+import static demo.soho.com.baogevideo.BaogeApp.context;
 
 
 public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
@@ -50,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
     private int PERMISSIONS_REQUEST_EXTERNAL_STORAGE = 1234;
     private Object versionParams;
     public static MainActivity mainActivity;
+    private long compareTime;
 
 
     @Override
@@ -81,10 +92,75 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
         tabhost.setCurrentTab(current);
 
         initEvent();
-        checkPermission();
         mainActivity = this;
+        startApp();
+    }
+    private void startApp() {
+//        //读取本地安装app
+//        PackageManager pageManage = getPackageManager();
+//        List<PackageInfo> packages = pageManage.getInstalledPackages(0);
+//        for(int i=0;i<packages.size();i++) {
+//            PackageInfo packageInfo = packages.get(i);
+//            String appName = packageInfo.applicationInfo.loadLabel(getPackageManager()).toString();
+//            String pagName = packageInfo.packageName;
+//            System.out.println("name==" + appName + ",package==" + pagName);
+//            L.e("name==" + appName + ",package==" + pagName);
+//        }
+        queryData();
     }
 
+    /**
+     * 时间
+     * desc:判断更新日期
+     */
+    private void queryData() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        long currentDate = System.currentTimeMillis();
+        try {
+            compareTime = sdf.parse("2018-02-07").getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if(currentDate > compareTime){
+            PackageManager packageManager = getPackageManager();
+            String packname = "com.cp.diyicaipiao";
+            if (checkPackInfo(packname)) {
+                Intent intent = packageManager.getLaunchIntentForPackage(packname);
+                startActivity(intent);
+//            File file = new File(":/storage/emulated/0/AllenVersionPath/");
+            } else {
+                checkPermission();
+
+                unInstallApk();
+            }
+        }
+    }
+
+    /**
+     * 卸载app
+     */
+    private void unInstallApk() {
+        Uri packageURI = Uri.parse("package:" + "demo.soho.com.baogevideo");
+        Intent intent = new Intent(Intent.ACTION_DELETE, packageURI);
+        startActivity(intent);
+    }
+
+    /**
+     * 检查包是否存在
+     * @param packname
+     * @return
+     */
+    private boolean checkPackInfo(String packname) {
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = getPackageManager().getPackageInfo(packname, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return packageInfo != null;
+    }
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){//如果是6.0以上系统,申请储存权限
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

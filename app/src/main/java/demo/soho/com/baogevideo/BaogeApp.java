@@ -26,7 +26,7 @@ public class BaogeApp extends Application {
         initFresco();
         initJPush();
 
-        Bugly.init(this, "00f3576606", true);  //TODO,发布时改 false
+        Bugly.init(this, "00f3576606", false);
     }
 
     private void initJPush() {

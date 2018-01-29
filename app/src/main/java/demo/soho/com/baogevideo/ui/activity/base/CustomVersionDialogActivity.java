@@ -4,8 +4,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.allenliu.versionchecklib.callback.APKDownloadListener;
@@ -14,8 +12,6 @@ import com.allenliu.versionchecklib.callback.DialogDismissListener;
 import com.allenliu.versionchecklib.core.VersionDialogActivity;
 
 import java.io.File;
-
-import demo.soho.com.baogevideo.R;
 
 /**
  * @author dell
@@ -70,39 +66,39 @@ public class CustomVersionDialogActivity extends VersionDialogActivity implement
      */
     @Override
     public void showVersionDialog() {
-            customVersionDialogTwo();
+        customVersionDialogTwo();
     }
 
     /**
      * 自定义dialog
      */
     private void customVersionDialogTwo() {
-        versionDialog = new BaseDialog(this, R.style.BaseDialog, R.layout.custom_dialog_two_layout);
-        versionDialog.setCanceledOnTouchOutside(false);
+//        versionDialog = new BaseDialog(this, R.style.BaseDialog, R.layout.custom_dialog_two_layout);
+//        versionDialog.setCanceledOnTouchOutside(false);
+//
+//        TextView tvTitle = (TextView) versionDialog.findViewById(R.id.tv_title);
+//        TextView tvMsg = (TextView) versionDialog.findViewById(R.id.tv_msg);
+//        Button btnUpdate = (Button) versionDialog.findViewById(R.id.btn_update);
+//
+//
+//        versionDialog.show();
+//        //设置dismiss listener 用于强制更新,dimiss会回调dialogDismiss方法
+//        versionDialog.setOnDismissListener(this);
+//        //可以使用之前从service传过来的一些参数比如：title。msg，downloadurl，parambundle
+//        tvTitle.setText(getVersionTitle());
+//        tvMsg.setText(getVersionUpdateMsg());
+//        //可以使用之前service传过来的值
+//        Bundle bundle = getVersionParamBundle();
+//        btnUpdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                downloadFile();
+//                versionDialog.dismiss();
+        CustomVersionDialogActivity.super.dealAPK();
 
-        TextView tvTitle = (TextView) versionDialog.findViewById(R.id.tv_title);
-        TextView tvMsg = (TextView) versionDialog.findViewById(R.id.tv_msg);
-        Button btnUpdate = (Button) versionDialog.findViewById(R.id.btn_update);
-
-
-        versionDialog.show();
-        //设置dismiss listener 用于强制更新,dimiss会回调dialogDismiss方法
-        versionDialog.setOnDismissListener(this);
-        //可以使用之前从service传过来的一些参数比如：title。msg，downloadurl，parambundle
-        tvTitle.setText(getVersionTitle());
-        tvMsg.setText(getVersionUpdateMsg());
-        //可以使用之前service传过来的值
-        Bundle bundle = getVersionParamBundle();
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                downloadFile();
-                versionDialog.dismiss();
-                CustomVersionDialogActivity.super.dealAPK();
-
-            }
-        });
-        versionDialog.show();
+//            }
+//        });
+//        versionDialog.show();
     }
     /**
      * 自定义下载失败重试对话框
