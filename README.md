@@ -1,2 +1,2 @@
 # BaogeVideo
-仿某短视频app
+仿Baoge视频app

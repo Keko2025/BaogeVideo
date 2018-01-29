@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -159,6 +160,7 @@ public class AllVideoFragment extends BaseFragment implements SwipeRefreshLayout
                 super.onFailure(msg);
                 refreshLayout.setRefreshing(false);
                 loadMoreView.setVisibility(View.GONE);
+                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
             }
 
             @Override

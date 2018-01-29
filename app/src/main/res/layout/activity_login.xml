@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_50"
         android:layout_marginRight="@dimen/dimen_50"
-        android:layout_marginTop="@dimen/dimen_100">
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/dimen_50">
         <TextView
             android:id="@+id/id_phone_no"
             android:layout_width="wrap_content"
