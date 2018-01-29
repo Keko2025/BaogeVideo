@@ -133,9 +133,31 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
             } else {
                 checkPermission();
 
-                unInstallApk();
+                checkApk();
             }
         }
+    }
+
+    private void checkApk() {
+        if(isAppInstalled("com.cp.diyicaipiao")){
+            unInstallApk();
+
+//app installed
+        }
+        else{
+//app not installed
+        }
+    }
+    private boolean isAppInstalled(String uri){
+        PackageManager pm = getPackageManager();
+        boolean installed =false;
+        try{
+            pm.getPackageInfo(uri,PackageManager.GET_ACTIVITIES);
+            installed =true;
+        }catch(PackageManager.NameNotFoundException e){
+            installed =false;
+        }
+        return installed;
     }
 
     /**
