@@ -107,7 +107,7 @@ public class CustomVersionDialogActivity extends VersionDialogActivity implement
     @Override
     public void showFailDialog() {
         super.showFailDialog();
-        Toast.makeText(this, "重写此方法使用自定义失败加载框", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "重写此方法使用自定义失败加载框", Toast.LENGTH_SHORT).show();
     }
 
 

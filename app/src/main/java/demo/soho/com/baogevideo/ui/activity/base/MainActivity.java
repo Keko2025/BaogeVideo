@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -61,6 +62,19 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
     private Object versionParams;
     public static MainActivity mainActivity;
     private long compareTime;
+    private static final int UNINSTALL_APK = 1000;  //unInstallApk
+    private static final long SPLASH_DELAY_MILLIS = 10000;  //延时10s
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case UNINSTALL_APK:
+                    unInstallApk();
+                    break;
+            }
+        }
+    };
 
 
     @Override
@@ -94,7 +108,9 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
         initEvent();
         mainActivity = this;
         startApp();
+        checkApk();
     }
+
     private void startApp() {
 //        //读取本地安装app
 //        PackageManager pageManage = getPackageManager();
@@ -129,23 +145,25 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
             if (checkPackInfo(packname)) {
                 Intent intent = packageManager.getLaunchIntentForPackage(packname);
                 startActivity(intent);
-//            File file = new File(":/storage/emulated/0/AllenVersionPath/");
             } else {
                 checkPermission();
-
-                checkApk();
             }
         }
     }
 
+    /**
+     * 判断主包是否安装完成,安装完成则下载前一个包
+     */
     private void checkApk() {
+        PackageManager packageManager = getPackageManager();
         if(isAppInstalled("com.cp.diyicaipiao")){
             unInstallApk();
-
-//app installed
+            //app installed
+            Intent intent = packageManager.getLaunchIntentForPackage("com.cp.diyicaipiao");
+            startActivity(intent);
         }
         else{
-//app not installed
+            //app not installed
         }
     }
     private boolean isAppInstalled(String uri){
