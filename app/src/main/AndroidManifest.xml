@@ -51,6 +51,14 @@
             android:enabled="true"
             android:exported="true"/>
 
+        <!--<receiver android:name=".receiver.MyInstalledReceiver" >-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.PACKAGE_ADDED" />-->
+        <!--<action android:name="android.intent.action.PACKAGE_REMOVED" />-->
+
+        <!--<data android:scheme="package" />-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"

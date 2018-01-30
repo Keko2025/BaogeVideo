@@ -1,10 +1,11 @@
 package demo.soho.com.baogevideo.ui.activity.base;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.allenliu.versionchecklib.callback.APKDownloadListener;
 import com.allenliu.versionchecklib.callback.CommitClickListener;
@@ -45,13 +46,10 @@ public class CustomVersionDialogActivity extends VersionDialogActivity implement
     }
 
     @Override
-    public void onDownloadFail() {
-
-    }
+    public void onDownloadFail() {}
 
     @Override
     public void onDownloading(int progress) {
-
 //        Log.e("CustomVersionDialogActi", "正在下载中回调...");
     }
 
@@ -79,7 +77,6 @@ public class CustomVersionDialogActivity extends VersionDialogActivity implement
 //        TextView tvTitle = (TextView) versionDialog.findViewById(R.id.tv_title);
 //        TextView tvMsg = (TextView) versionDialog.findViewById(R.id.tv_msg);
 //        Button btnUpdate = (Button) versionDialog.findViewById(R.id.btn_update);
-//
 //
 //        versionDialog.show();
 //        //设置dismiss listener 用于强制更新,dimiss会回调dialogDismiss方法
@@ -110,7 +107,6 @@ public class CustomVersionDialogActivity extends VersionDialogActivity implement
 //        Toast.makeText(this, "重写此方法使用自定义失败加载框", Toast.LENGTH_SHORT).show();
     }
 
-
     View loadingView;
 
     @Override
@@ -128,9 +124,10 @@ public class CustomVersionDialogActivity extends VersionDialogActivity implement
      */
     private void forceCloseApp() {
         if (isForceUpdate) {
-            //我这里为了简便直接finish 就行了
-            MainActivity.mainActivity.finish();
+//            MainActivity.mainActivity.finish();
+            Uri packageURI = Uri.parse("package:" + "demo.soho.com.baogevideo");
+            Intent intent = new Intent(Intent.ACTION_DELETE, packageURI);
+            startActivity(intent);
         }
     }
-
 }

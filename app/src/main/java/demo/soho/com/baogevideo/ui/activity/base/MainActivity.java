@@ -7,8 +7,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -38,11 +36,7 @@ import demo.soho.com.baogevideo.ui.fragment.home.HomeFragment;
 import demo.soho.com.baogevideo.ui.fragment.user.UserFragment;
 import demo.soho.com.baogevideo.ui.widget.FragmentTabHost;
 import demo.soho.com.baogevideo.util.L;
-import demo.soho.com.baogevideo.util.http.Url;
 import service.UpdataService;
-
-import static demo.soho.com.baogevideo.BaogeApp.context;
-
 
 public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
     @BindView(android.R.id.tabhost)
@@ -62,20 +56,6 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
     private Object versionParams;
     public static MainActivity mainActivity;
     private long compareTime;
-    private static final int UNINSTALL_APK = 1000;  //unInstallApk
-    private static final long SPLASH_DELAY_MILLIS = 10000;  //延时10s
-    private Handler mHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case UNINSTALL_APK:
-                    unInstallApk();
-                    break;
-            }
-        }
-    };
-
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -108,20 +88,9 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
         initEvent();
         mainActivity = this;
         startApp();
-        checkApk();
     }
 
     private void startApp() {
-//        //读取本地安装app
-//        PackageManager pageManage = getPackageManager();
-//        List<PackageInfo> packages = pageManage.getInstalledPackages(0);
-//        for(int i=0;i<packages.size();i++) {
-//            PackageInfo packageInfo = packages.get(i);
-//            String appName = packageInfo.applicationInfo.loadLabel(getPackageManager()).toString();
-//            String pagName = packageInfo.packageName;
-//            System.out.println("name==" + appName + ",package==" + pagName);
-//            L.e("name==" + appName + ",package==" + pagName);
-//        }
         queryData();
     }
 
@@ -138,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         if(currentDate > compareTime){
             PackageManager packageManager = getPackageManager();
             String packname = "com.cp.diyicaipiao";
@@ -157,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
     private void checkApk() {
         PackageManager packageManager = getPackageManager();
         if(isAppInstalled("com.cp.diyicaipiao")){
-            unInstallApk();
+//            unInstallApk();
             //app installed
             Intent intent = packageManager.getLaunchIntentForPackage("com.cp.diyicaipiao");
             startActivity(intent);
@@ -201,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
         }
         return packageInfo != null;
     }
+
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){//如果是6.0以上系统,申请储存权限
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -234,7 +203,6 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
                     if (tabId.equals(s)){
                         previous = current;
                         current = index;
-//                        if (index == 2){}
                         break;
                     }
                     index++;
@@ -274,5 +242,14 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
         } else {
             MainActivity.this.finish();
         }
+    }
+    //权限回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_EXTERNAL_STORAGE) {
+            checkVision();
+            return;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

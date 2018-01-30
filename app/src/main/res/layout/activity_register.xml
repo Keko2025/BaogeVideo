@@ -39,6 +39,7 @@
         <EditText
             android:id="@+id/etv_user_phone"
             style="@style/style_common_width_height_mw"
+            android:layout_below="@+id/id_phone_no"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:gravity="center|left"
@@ -58,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_0.5"
             android:layout_marginTop="@dimen/dimen_5"
-            android:layout_below="@+id/etv_user_phone"
+            android:layout_below="@+id/tv_area"
             android:background="@color/lightgrey"/>
 
         <TextView

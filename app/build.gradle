@@ -80,5 +80,4 @@ dependencies {
 
 
     compile 'com.allenliu.versionchecklib:library:1.8.3'//{exclude module: "appcompat-v7"}
-
 }

@@ -37,6 +37,8 @@ import demo.soho.com.baogevideo.util.StringUtils;
 import demo.soho.com.baogevideo.util.http.OkHttpUtil;
 import demo.soho.com.baogevideo.util.http.Url;
 
+import static junit.runner.Version.id;
+
 /**
  * @author dell
  * @data 2018/1/19.
@@ -156,7 +158,11 @@ public class UserFragment extends BaseFragment {
                 startActivity(new Intent(mContext, VideoCacheActivity.class));
                 break;
             case R.id.tv_collect:
-                startActivity(new Intent(mContext, CollectActivity.class));
+                if(!StringUtils.isEmptyString(token)){
+                    startActivity(new Intent(mContext, CollectActivity.class));
+                }else {
+                    startActivity(new Intent(mContext,LoginActivity.class));
+                }
                 break;
             case R.id.tv_play_history:
                 startActivity(new Intent(mContext, VideoHisActivity.class));
