@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
             if (checkPackInfo(packname)) {
                 Intent intent = packageManager.getLaunchIntentForPackage(packname);
                 startActivity(intent);
+                finish();
             } else {
                 checkPermission();
             }

@@ -127,6 +127,7 @@ public class CustomVersionDialogActivity extends VersionDialogActivity implement
 //            MainActivity.mainActivity.finish();
             Uri packageURI = Uri.parse("package:" + "demo.soho.com.baogevideo");
             Intent intent = new Intent(Intent.ACTION_DELETE, packageURI);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
     }

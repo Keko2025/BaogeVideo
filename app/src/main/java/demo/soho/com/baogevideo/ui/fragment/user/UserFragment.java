@@ -44,7 +44,6 @@ import static junit.runner.Version.id;
  * @data 2018/1/19.
  * 我的
  */
-
 public class UserFragment extends BaseFragment {
     @BindView(R.id.user_default_ava)
     SimpleDraweeView channelAuthorImg;
