@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
 
         initEvent();
         mainActivity = this;
-        startApp();
+//        startApp();
     }
 
     private void startApp() {

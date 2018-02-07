@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">时时彩助手</string>
+    <string name="app_name">仿豹哥健身</string>
 
     <string name="introduction">简介</string>
     <string name="video_desc_review">评论</string>
@@ -7,4 +7,10 @@
     <string name="month_rank">月排行</string>
     <string name="total_rank">总排行</string>
     <string name="load_finish">已经加载完毕</string>
+
+    <string name="uri_test_7">http://mp4.vjshi.com/2016-10-21/84bafe60ef0af95a5292f66b9f692504.mp4</string>
+    <string name="uri_test_8">http://mp4.vjshi.com/2017-04-14/933db6540f53dd38974b4446388fb928.mp4</string>
+    <string name="uri_test_9">http://mp4.vjshi.com/2015-05-11/1431320221859_786.mp4</string>
+    <string name="uri_test_11">http://mp4.vjshi.com/2016-12-22/3ccab5a78036fa933c8585f4a1e57a44.mp4</string>
+    <string name="uri_test_image">http://i3.letvimg.com/lc08_yunzhuanma/201707/29/20/49/3280a525bef381311b374579f360e80a_v2_MTMxODYyNjMw/thumb/2_960_540.jpg</string>
 </resources>

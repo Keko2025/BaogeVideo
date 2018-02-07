@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import demo.soho.com.baogevideo.R;
 import demo.soho.com.baogevideo.model.VideoListBean;
 import demo.soho.com.baogevideo.ui.activity.home.VideoDesActivity;
+import demo.soho.com.baogevideo.ui.activity.home.VideoDetailActivity;
 import demo.soho.com.baogevideo.ui.adapter.common.HeaderViewRecyclerAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerCommonAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerViewHolder;
@@ -99,6 +100,12 @@ public class AllVideoFragment extends BaseFragment implements SwipeRefreshLayout
                 L.e("id：" + videoList.get(position).getId());
             }
         });
+//        adapter.setOnItemClickListener(new RecyclerCommonAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                mContext.startActivity(new Intent(mContext,VideoDetailActivity.class).putExtra("videoId",videoList.get(position).getId()));
+//            }
+//        });
         mAdapter = new HeaderViewRecyclerAdapter(adapter);
         createLoadMoreView();
         recyclerView.setAdapter(mAdapter);

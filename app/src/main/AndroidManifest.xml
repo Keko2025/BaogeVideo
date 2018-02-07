@@ -12,7 +12,7 @@
     <application
         android:name=".BaogeApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -46,6 +46,10 @@
 
         <activity android:name=".ui.activity.base.CustomVersionDialogActivity"
             android:theme="@style/versionCheckLibvtransparentTheme"/>
+        <activity android:name=".ui.activity.home.VideoDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            />
 
         <service android:name="service.UpdataService"
             android:enabled="true"
