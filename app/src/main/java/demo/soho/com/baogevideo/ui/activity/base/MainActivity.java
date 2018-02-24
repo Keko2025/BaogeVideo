@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         current = getIntent().getIntExtra("current", 0);
         tabhost.setup(this, getSupportFragmentManager(), R.id.frameLayout);
         for(int i = 0; i < texts.length; i++){

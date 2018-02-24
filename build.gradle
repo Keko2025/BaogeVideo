@@ -3,10 +3,10 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.android.tools.build:gradle:3.0.1'
         classpath "com.tencent.bugly:tinker-support:1.0.8"
     }
 }
@@ -14,7 +14,11 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
         maven { url 'https://jitpack.io' }
+        flatDir{
+            dirs 'libs'  //this way we can find the .aar file in libs folder
+        }
     }
 }
 
