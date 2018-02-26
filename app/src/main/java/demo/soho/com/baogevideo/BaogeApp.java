@@ -8,8 +8,7 @@ import android.support.multidex.MultiDex;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.tencent.bugly.Bugly;
-
-import cn.jpush.android.api.JPushInterface;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @author dell
@@ -24,14 +23,14 @@ public class BaogeApp extends Application {
 
         context = getApplicationContext();
         initFresco();
-        initJPush();
 
-        Bugly.init(this, "00f3576606", false);
+        Bugly.init(this, "0bead122a5", false);
+        initUmeng();
     }
 
-    private void initJPush() {
-        JPushInterface.setDebugMode(false);
-        JPushInterface.init(this);
+    private void initUmeng() {
+        MobclickAgent.setScenarioType(context, MobclickAgent.EScenarioType.E_UM_NORMAL);
+        MobclickAgent.setDebugMode(true);
     }
 
     private void initFresco() {
