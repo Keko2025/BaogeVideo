@@ -75,8 +75,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onError(String msg) {
                 super.onError(msg);
-                CodeBean codeBean = new Gson().fromJson(msg,CodeBean.class);
-                Toast.makeText(LoginActivity.this, codeBean.getMsg(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "error", Toast.LENGTH_SHORT).show();
             }
 
             @Override

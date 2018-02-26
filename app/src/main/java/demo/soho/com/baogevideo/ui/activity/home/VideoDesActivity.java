@@ -205,6 +205,7 @@ public class VideoDesActivity extends AppCompatActivity {
         orientationUtils.setEnable(false);//初始化不打开外部的旋转
 
         GSYVideoOptionBuilder gsyVideoOption = new GSYVideoOptionBuilder();
+        L.e("url:"+videoBean.getData().getFile_url());
         gsyVideoOption
                 .setThumbImageView(imageView)
                 .setIsTouchWiget(true)

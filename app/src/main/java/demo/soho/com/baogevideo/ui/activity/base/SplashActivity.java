@@ -9,8 +9,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -21,9 +23,19 @@ import android.widget.Toast;
 import java.io.File;
 import java.lang.reflect.Method;
 
+import abc.abc.abc.AdManager;
+import abc.abc.abc.nm.cm.ErrorCode;
+import abc.abc.abc.nm.sp.SplashViewSettings;
+import abc.abc.abc.nm.sp.SpotListener;
+import abc.abc.abc.nm.sp.SpotManager;
+import abc.abc.abc.nm.sp.SpotRequestListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import demo.soho.com.baogevideo.R;
+import demo.soho.com.baogevideo.util.L;
+import demo.soho.com.baogevideo.util.PermissionHelper;
+
+import static demo.soho.com.baogevideo.BaogeApp.context;
 
 /**
  * @author dell
@@ -33,6 +45,9 @@ import demo.soho.com.baogevideo.R;
 public class SplashActivity extends AppCompatActivity {
     @BindView(R.id.rl_splash)
     RelativeLayout rlSplash;
+    private PermissionHelper mPermissionHelper;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +65,73 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         startAnim();
+        AdManager.getInstance(context).init("46ebb2813ca88462", "e501185cdc0f020a", true);
+
+        permissionHelper();
+    }
+
+    /**
+     * 用户权限
+     */
+    private void permissionHelper() {
+// 当系统为6.0以上时，需要申请权限
+        mPermissionHelper = new PermissionHelper(this);
+        mPermissionHelper.setOnApplyPermissionListener(new PermissionHelper.OnApplyPermissionListener() {
+            @Override
+            public void onAfterApplyAllPermission() {
+                runApp();
+            }
+        });
+        if (Build.VERSION.SDK_INT < 23) {
+            // 如果系统版本低于23，直接跑应用的逻辑
+            runApp();
+        } else {
+            // 如果权限全部申请了，那就直接跑应用逻辑
+            if (mPermissionHelper.isAllRequestedPermissionGranted()) {
+                runApp();
+            } else {
+                // 如果还有权限为申请，而且系统版本大于23，执行申请权限逻辑
+                mPermissionHelper.applyPermissions();
+            }
+        }
+    }
+    /**
+     * 跑应用的逻辑
+     */
+    private void runApp() {
+        //初始化SDK
+        AdManager.getInstance(context).init("85aa56a59eac8b3d", "a14006f66f58d5d7", true);
+        preloadAd();
+//        setupSplashAd(); // 如果需要首次展示开屏，请注释掉本句代码
+    }
+
+    /**
+     * 预加载广告
+     */
+    private void preloadAd() {
+        // 注意：不必每次展示插播广告前都请求，只需在应用启动时请求一次
+        SpotManager.getInstance(context).requestSpot(new SpotRequestListener() {
+            @Override
+            public void onRequestSuccess() {
+                L.e("请求插播广告成功");
+            }
+
+            @Override
+            public void onRequestFailed(int errorCode) {
+                L.e("请求插播广告失败，errorCode: %s" + errorCode);
+                switch (errorCode) {
+                    case ErrorCode.NON_NETWORK:
+                        Toast.makeText(SplashActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                        break;
+                    case ErrorCode.NON_AD:
+                        Toast.makeText(SplashActivity.this, "暂无视频广告", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(SplashActivity.this, "请稍后再试", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -127,4 +209,12 @@ public class SplashActivity extends AppCompatActivity {
         // 启动动画
         rlSplash.startAnimation(alpha);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 开屏展示界面的 onDestroy() 回调方法中调用
+        SpotManager.getInstance(this).onDestroy();
+    }
+
 }

@@ -12,7 +12,7 @@
     <application
         android:name=".BaogeApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -44,25 +44,10 @@
         <activity android:name=".ui.activity.user.VideoCacheActivity"/>
         <activity android:name=".ui.activity.user.VideoHisActivity"/>
 
-        <activity android:name=".ui.activity.base.CustomVersionDialogActivity"
-            android:theme="@style/versionCheckLibvtransparentTheme"/>
         <activity android:name=".ui.activity.home.VideoDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             />
-
-        <service android:name="service.UpdataService"
-            android:enabled="true"
-            android:exported="true"/>
-
-        <!--<receiver android:name=".receiver.MyInstalledReceiver" >-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.PACKAGE_ADDED" />-->
-        <!--<action android:name="android.intent.action.PACKAGE_REMOVED" />-->
-
-        <!--<data android:scheme="package" />-->
-        <!--</intent-filter>-->
-        <!--</receiver>-->
 
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
