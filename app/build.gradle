@@ -61,7 +61,7 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:1.5.0'
     implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.3.0'
 
-    implementation 'com.shuyu:GSYVideoPlayer:2.0.9'
+    implementation 'com.shuyu:GSYVideoPlayer:4.0.0-beat1'
 
     implementation 'com.bigkoo:svprogresshud:1.0.6'// 提示框
 

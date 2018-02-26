@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
@@ -185,7 +186,6 @@ public class VideoDesActivity extends AppCompatActivity {
         });
     }
 
-
     private void initVideo(VideoDescBean videoBean) {
         /**
          * 设置右下角 显示切换到全屏(显示退出全屏)的按键资源
@@ -218,11 +218,9 @@ public class VideoDesActivity extends AppCompatActivity {
                 .setCacheWithPlay(false)
                 .setVideoTitle(videoBean.getData().getTitle())
                 .setThumbPlay(true)
-                .setStandardVideoAllCallBack(new SampleListener() {
+                .setVideoAllCallBack(new SampleListener() {
                     @Override
                     public void onPrepared(String url, Object... objects) {
-                        Debuger.printfError("***** onPrepared **** " + objects[0]);
-                        Debuger.printfError("***** onPrepared **** " + objects[1]);
                         super.onPrepared(url, objects);
                         //开始播放了才能旋转和全屏
                         orientationUtils.setEnable(true);
@@ -232,8 +230,6 @@ public class VideoDesActivity extends AppCompatActivity {
                     @Override
                     public void onEnterFullscreen(String url, Object... objects) {
                         super.onEnterFullscreen(url, objects);
-                        Debuger.printfError("***** onEnterFullscreen **** " + objects[0]);//title
-                        Debuger.printfError("***** onEnterFullscreen **** " + objects[1]);//当前全屏player
                     }
 
                     @Override
@@ -254,8 +250,6 @@ public class VideoDesActivity extends AppCompatActivity {
                     @Override
                     public void onQuitFullscreen(String url, Object... objects) {
                         super.onQuitFullscreen(url, objects);
-                        Debuger.printfError("***** onQuitFullscreen **** " + objects[0]);//title
-                        Debuger.printfError("***** onQuitFullscreen **** " + objects[1]);//当前非全屏player
                         if (orientationUtils != null) {
                             orientationUtils.backToProtVideo();
                         }
@@ -267,7 +261,6 @@ public class VideoDesActivity extends AppCompatActivity {
                         if (orientationUtils != null) {
                             //配合下方的onConfigurationChanged
                             orientationUtils.setEnable(!lock);
-
                             detailPlayer.getCurrentPlayer().setRotateViewAuto(!lock);
                         }
                     }
@@ -302,7 +295,7 @@ public class VideoDesActivity extends AppCompatActivity {
         if (orientationUtils != null) {
             orientationUtils.backToProtVideo();
         }
-        if (StandardGSYVideoPlayer.backFromWindowFull(this)) {
+        if (GSYVideoManager.backFromWindowFull(this)) {
             return;
         }
         super.onBackPressed();

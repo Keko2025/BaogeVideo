@@ -1,17 +1,20 @@
 package demo.soho.com.baogevideo.listener;
 
-import com.shuyu.gsyvideoplayer.listener.StandardVideoAllCallBack;
+
+import com.shuyu.gsyvideoplayer.listener.VideoAllCallBack;
 
 /**
  * Created by dell on 2017/2/21.
  */
-public class SampleListener implements StandardVideoAllCallBack {
+public class SampleListener implements VideoAllCallBack {
     @Override
     public void onClickStartThumb(String s, Object... objects) {}
     @Override
     public void onClickBlank(String s, Object... objects) {}
     @Override
     public void onClickBlankFullscreen(String s, Object... objects) {}
+    @Override
+    public void onStartPrepared(String url, Object... objects) {}
     @Override
     public void onPrepared(String s, Object... objects) {}
     @Override
