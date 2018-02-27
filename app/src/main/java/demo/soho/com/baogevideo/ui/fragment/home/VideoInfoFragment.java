@@ -34,7 +34,6 @@ import demo.soho.com.baogevideo.model.VideoDescBean;
 import demo.soho.com.baogevideo.model.VideoListBean;
 import demo.soho.com.baogevideo.ui.activity.channel.ChannelDescActivity;
 import demo.soho.com.baogevideo.ui.activity.home.VideoDesActivity;
-import demo.soho.com.baogevideo.ui.activity.search.VideoTagActivity;
 import demo.soho.com.baogevideo.ui.adapter.common.HeaderViewRecyclerAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerCommonAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerViewHolder;
@@ -43,8 +42,6 @@ import demo.soho.com.baogevideo.util.L;
 import demo.soho.com.baogevideo.util.SpUtil;
 import demo.soho.com.baogevideo.util.http.OkHttpUtil;
 import demo.soho.com.baogevideo.util.http.Url;
-
-import static android.R.attr.data;
 
 /**
  * @author dell

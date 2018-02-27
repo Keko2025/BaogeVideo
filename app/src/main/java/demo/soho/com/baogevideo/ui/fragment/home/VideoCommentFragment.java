@@ -24,7 +24,6 @@ import butterknife.ButterKnife;
 import demo.soho.com.baogevideo.R;
 import demo.soho.com.baogevideo.model.VideoCommentBean;
 import demo.soho.com.baogevideo.model.VideoDescBean;
-import demo.soho.com.baogevideo.ui.activity.home.UserZoneActivity;
 import demo.soho.com.baogevideo.ui.adapter.common.HeaderViewRecyclerAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerCommonAdapter;
 import demo.soho.com.baogevideo.ui.adapter.common.RecyclerViewHolder;
@@ -113,7 +112,6 @@ public class VideoCommentFragment extends BaseFragment implements SwipeRefreshLa
                 holder.setOnClickListener(R.id.user_ava, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(mContext,UserZoneActivity.class));
                     }
                 });
             }

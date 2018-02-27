@@ -34,8 +34,6 @@
             />
 
         <activity android:name=".ui.activity.search.VideoTagActivity"/>
-        <activity android:name=".ui.activity.home.UserZoneActivity"/>
-        <activity android:name=".ui.activity.home.CommentDescActivity"/>
         <activity android:name=".ui.activity.channel.ChannelDescActivity"/>
         <activity android:name=".ui.activity.user.RegisterActivity"/>
         <activity android:name=".ui.activity.user.RegisterNextActivity"/>
