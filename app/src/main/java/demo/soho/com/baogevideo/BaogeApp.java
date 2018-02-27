@@ -9,8 +9,6 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.tencent.bugly.Bugly;
 
-import cn.jpush.android.api.JPushInterface;
-
 /**
  * @author dell
  * @data 2018/1/20.
@@ -24,14 +22,8 @@ public class BaogeApp extends Application {
 
         context = getApplicationContext();
         initFresco();
-        initJPush();
 
         Bugly.init(this, "00f3576606", false);
-    }
-
-    private void initJPush() {
-        JPushInterface.setDebugMode(false);
-        JPushInterface.init(this);
     }
 
     private void initFresco() {
