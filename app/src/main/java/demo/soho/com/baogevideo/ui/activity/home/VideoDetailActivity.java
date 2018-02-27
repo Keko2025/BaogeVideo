@@ -23,13 +23,14 @@ import chuangyuan.ycj.videolibrary.video.GestureVideoPlayer;
 import chuangyuan.ycj.videolibrary.widget.VideoPlayerView;
 import demo.soho.com.baogevideo.R;
 import demo.soho.com.baogevideo.data.DataSource;
+import demo.soho.com.baogevideo.ui.activity.base.BaseActivity;
 
 /**
  * @author dell
  * @data 2018/2/5.
  */
 
-public class VideoDetailActivity extends AppCompatActivity {
+public class VideoDetailActivity extends BaseActivity {
     @BindView(R.id.exo_play_context_id)
     VideoPlayerView videoPlayerView;
     @BindView(R.id.toolbar_tab)
