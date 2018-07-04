@@ -3,9 +3,7 @@ package demo.soho.com.baogevideo.ui.fragment.user;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,20 +22,18 @@ import demo.soho.com.baogevideo.ui.activity.user.CollectActivity;
 import demo.soho.com.baogevideo.ui.activity.user.LoginActivity;
 import demo.soho.com.baogevideo.ui.activity.user.NotifyActivity;
 import demo.soho.com.baogevideo.ui.activity.user.RegisterActivity;
-import demo.soho.com.baogevideo.ui.activity.user.ReplyActivity;
+import demo.soho.com.baogevideo.ui.activity.user.adv.OffersAdsActivity;
 import demo.soho.com.baogevideo.ui.activity.user.SetActivity;
 import demo.soho.com.baogevideo.ui.activity.user.ThumpActivity;
-import demo.soho.com.baogevideo.ui.activity.user.UserLevelActivity;
 import demo.soho.com.baogevideo.ui.activity.user.VideoCacheActivity;
-import demo.soho.com.baogevideo.ui.activity.user.VideoHisActivity;
+import demo.soho.com.baogevideo.ui.activity.user.adv.NativeSpotAdActivity;
+import demo.soho.com.baogevideo.ui.activity.user.adv.VideoAdvActivity;
 import demo.soho.com.baogevideo.ui.fragment.base.BaseFragment;
 import demo.soho.com.baogevideo.util.L;
 import demo.soho.com.baogevideo.util.SpUtil;
 import demo.soho.com.baogevideo.util.StringUtils;
 import demo.soho.com.baogevideo.util.http.OkHttpUtil;
 import demo.soho.com.baogevideo.util.http.Url;
-
-import static junit.runner.Version.id;
 
 /**
  * @author dell
@@ -61,8 +57,6 @@ public class UserFragment extends BaseFragment {
     TextView tvUsername;
     @BindView(R.id.tv_nikename)
     TextView tvNikename;
-    @BindView(R.id.tv_user_level)
-    TextView tvUserLevel;
     private Context mContext;
     private String token;
     private UserBean userBean;
@@ -88,9 +82,7 @@ public class UserFragment extends BaseFragment {
         Map<String, Object> parameters = new HashMap<>();
         new OkHttpUtil().post(Url.VIDEO_ALL_API, parameters, new OkHttpUtil.HttpCallback() {
             @Override
-            public void onSuccess(String data) {
-
-            }
+            public void onSuccess(String data) {}
 
             @Override
             public void onError(String msg) {
@@ -141,7 +133,7 @@ public class UserFragment extends BaseFragment {
         tvNikename.setText(userBean.getData().getMedal());
     }
 
-    @OnClick({R.id.tv_register, R.id.tv_login, R.id.tv_user_level, R.id.tv_cache, R.id.tv_collect, R.id.tv_play_history, R.id.tv_response, R.id.tv_thump_up, R.id.tv_notify, R.id.tv_setting})
+    @OnClick({R.id.tv_register, R.id.tv_login, R.id.tv_video_adv, R.id.tv_cache, R.id.tv_collect, R.id.tv_show_slideable_spot_ad, R.id.tv_response, R.id.tv_thump_up, R.id.tv_notify, R.id.tv_setting})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_register:
@@ -150,24 +142,20 @@ public class UserFragment extends BaseFragment {
             case R.id.tv_login:
                 startActivity(new Intent(mContext, LoginActivity.class));
                 break;
-            case R.id.tv_user_level:
-                startActivity(new Intent(mContext, UserLevelActivity.class));
+            case R.id.tv_video_adv:
+                startActivity(new Intent(mContext, VideoAdvActivity.class));
                 break;
             case R.id.tv_cache:
                 startActivity(new Intent(mContext, VideoCacheActivity.class));
                 break;
             case R.id.tv_collect:
-                if(!StringUtils.isEmptyString(token)){
-                    startActivity(new Intent(mContext, CollectActivity.class));
-                }else {
-                    startActivity(new Intent(mContext,LoginActivity.class));
-                }
+                startActivity(new Intent(mContext, CollectActivity.class));
                 break;
-            case R.id.tv_play_history:
-                startActivity(new Intent(mContext, VideoHisActivity.class));
+            case R.id.tv_show_slideable_spot_ad:
+                startActivity(new Intent(mContext, NativeSpotAdActivity.class));
                 break;
             case R.id.tv_response:
-                startActivity(new Intent(mContext, ReplyActivity.class));
+                startActivity(new Intent(mContext, OffersAdsActivity.class));
                 break;
             case R.id.tv_thump_up:
                 startActivity(new Intent(mContext, ThumpActivity.class));

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +68,6 @@ public class SetActivity extends BaseActivity {
                 Toast.makeText(SetActivity.this, codeBean.getMsg(), Toast.LENGTH_SHORT).show();
                 finish();
             }
-
             @Override
             public void onError(String msg) {
                 super.onError(msg);
@@ -78,5 +78,13 @@ public class SetActivity extends BaseActivity {
                 super.onFailure(msg);
             }
         });
+    }
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

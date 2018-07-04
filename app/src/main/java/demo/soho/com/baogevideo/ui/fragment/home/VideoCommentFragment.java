@@ -1,7 +1,6 @@
 package demo.soho.com.baogevideo.ui.fragment.home;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -112,6 +111,7 @@ public class VideoCommentFragment extends BaseFragment implements SwipeRefreshLa
                 holder.setOnClickListener(R.id.user_ava, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+//                        startActivity(new Intent(mContext,UserZoneActivity.class));
                     }
                 });
             }

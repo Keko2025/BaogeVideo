@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="demo.soho.com.baogevideo">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -8,15 +9,30 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 添加如下权限，以便使用更多的第三方SDK和更精准的统计数据 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 【必须】 信鸽SDK所需权限   -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 【常用】 信鸽SDK所需权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--bugly所需权限-->
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <application
         android:name=".BaogeApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".ui.activity.base.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,8 +48,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             />
-
-        <activity android:name=".ui.activity.search.VideoTagActivity"/>
         <activity android:name=".ui.activity.channel.ChannelDescActivity"/>
         <activity android:name=".ui.activity.user.RegisterActivity"/>
         <activity android:name=".ui.activity.user.RegisterNextActivity"/>
@@ -41,36 +55,34 @@
         <activity android:name=".ui.activity.user.SetActivity"/>
         <activity android:name=".ui.activity.user.CollectActivity"/>
         <activity android:name=".ui.activity.user.VideoCacheActivity"/>
-        <activity android:name=".ui.activity.user.VideoHisActivity"/>
-
-        <activity android:name=".ui.activity.base.CustomVersionDialogActivity"
-            android:theme="@style/versionCheckLibvtransparentTheme"/>
+        <activity android:name=".ui.activity.user.adv.NativeSpotAdActivity"/>
         <activity android:name=".ui.activity.home.VideoDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             />
+        <!--视频广告-->
+        <activity android:name=".ui.activity.user.adv.VideoAdvActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout"
+            android:resizeableActivity="false"
+            android:screenOrientation="landscape"
+            android:taskAffinity=""
+            >
+        </activity>
 
-        <service android:name="service.UpdataService"
-            android:enabled="true"
-            android:exported="true"/>
-
-        <!--<receiver android:name=".receiver.MyInstalledReceiver" >-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.PACKAGE_ADDED" />-->
-        <!--<action android:name="android.intent.action.PACKAGE_REMOVED" />-->
-
-        <!--<data android:scheme="package" />-->
-        <!--</intent-filter>-->
-        <!--</receiver>-->
-
+        <activity android:name=".ui.activity.user.adv.OffersAdsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
+            >
+        </activity>
+        <!--bugly-->
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent" />
 
+        <!--配置FileProvider兼容N或以上设备-->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.fileProvider"
+            android:authorities="demo.soho.com.baogevideo.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -80,5 +92,19 @@
 
         <meta-data android:value="5a93cd57f43e4877fe0002c8" android:name="UMENG_APPKEY"/>
         <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+
+        <activity android:name="com.tencent.android.tpush.XGPushActivity" android:exported="false" > </activity>
+
+        <receiver android:name="demo.soho.com.baogevideo.receiver.MessageReceiver"
+            android:exported="true">
+            <intent-filter>
+                <!-- 接收消息透传 -->
+                <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
+                <!-- 监听注册、反注册、设置/删除标签、通知被点击等处理结果 -->
+                <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
+            </intent-filter>
+        </receiver>
+
+
     </application>
 </manifest>

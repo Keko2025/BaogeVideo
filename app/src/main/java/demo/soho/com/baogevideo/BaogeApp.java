@@ -4,11 +4,17 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 
 /**
  * @author dell
@@ -20,17 +26,51 @@ public class BaogeApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         context = getApplicationContext();
-        initFresco();
 
-        Bugly.init(this, "0bead122a5", false);
+        initFresco();
+        initBugly();
         initUmeng();
+        initXGAPush();
     }
 
+    /**
+     * bugly
+     */
+    private void initBugly() {
+        Bugly.init(this, "0bead122a5", false);
+        Beta.autoDownloadOnWifi = true;
+        Beta.canShowApkInfo = true;
+    }
+
+    /**
+     * 信鸽
+     */
+    private void initXGAPush() {
+        XGPushConfig.enableDebug(this,true);
+        XGPushManager.registerPush(this, new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                //token在设备卸载重装的时候有可能会变
+                Log.d("TPush", "注册成功，设备token为：" + data);
+            }
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
+    }
+
+    /**
+     * 初始化
+     */
     private void initUmeng() {
-        MobclickAgent.setScenarioType(context, MobclickAgent.EScenarioType.E_UM_NORMAL);
-        MobclickAgent.setDebugMode(true);
+        //设置log开关
+        UMConfigure.setLogEnabled(true);
+        //日志加密
+        UMConfigure.setEncryptEnabled(true);
+        UMConfigure.init(this, "5a93cd57f43e4877fe0002c8", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, null);
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
 
     private void initFresco() {
@@ -46,5 +86,8 @@ public class BaogeApp extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(base);
+
+        // 安装tinker
+        Beta.installTinker();
     }
 }

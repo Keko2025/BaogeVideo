@@ -17,13 +17,13 @@ import android.widget.Toast;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
-import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -175,6 +175,13 @@ public class VideoDesActivity extends AppCompatActivity {
         toolbarTab.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(toolbarTab));
         toolbarTab.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
+        setTabLayout();
+    }
+    /**
+     * 设置TabLayout下划线宽度
+     */
+    private void setTabLayout() {
+        TabUtil.reflex(toolbarTab);
     }
     //必须要在Tablayout渲染出来后调用,
     private void initTab() {
@@ -185,6 +192,7 @@ public class VideoDesActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void initVideo(VideoDescBean videoBean) {
         /**
@@ -205,6 +213,7 @@ public class VideoDesActivity extends AppCompatActivity {
         orientationUtils.setEnable(false);//初始化不打开外部的旋转
 
         GSYVideoOptionBuilder gsyVideoOption = new GSYVideoOptionBuilder();
+        L.e("url:"+videoBean.getData().getFile_url());
         gsyVideoOption
                 .setThumbImageView(imageView)
                 .setIsTouchWiget(true)
@@ -218,9 +227,11 @@ public class VideoDesActivity extends AppCompatActivity {
                 .setCacheWithPlay(false)
                 .setVideoTitle(videoBean.getData().getTitle())
                 .setThumbPlay(true)
-                .setVideoAllCallBack(new SampleListener() {
+                .setStandardVideoAllCallBack(new SampleListener() {
                     @Override
                     public void onPrepared(String url, Object... objects) {
+                        Debuger.printfError("***** onPrepared **** " + objects[0]);
+                        Debuger.printfError("***** onPrepared **** " + objects[1]);
                         super.onPrepared(url, objects);
                         //开始播放了才能旋转和全屏
                         orientationUtils.setEnable(true);
@@ -230,6 +241,8 @@ public class VideoDesActivity extends AppCompatActivity {
                     @Override
                     public void onEnterFullscreen(String url, Object... objects) {
                         super.onEnterFullscreen(url, objects);
+                        Debuger.printfError("***** onEnterFullscreen **** " + objects[0]);//title
+                        Debuger.printfError("***** onEnterFullscreen **** " + objects[1]);//当前全屏player
                     }
 
                     @Override
@@ -250,6 +263,8 @@ public class VideoDesActivity extends AppCompatActivity {
                     @Override
                     public void onQuitFullscreen(String url, Object... objects) {
                         super.onQuitFullscreen(url, objects);
+                        Debuger.printfError("***** onQuitFullscreen **** " + objects[0]);//title
+                        Debuger.printfError("***** onQuitFullscreen **** " + objects[1]);//当前非全屏player
                         if (orientationUtils != null) {
                             orientationUtils.backToProtVideo();
                         }
@@ -261,6 +276,7 @@ public class VideoDesActivity extends AppCompatActivity {
                         if (orientationUtils != null) {
                             //配合下方的onConfigurationChanged
                             orientationUtils.setEnable(!lock);
+
                             detailPlayer.getCurrentPlayer().setRotateViewAuto(!lock);
                         }
                     }
@@ -295,7 +311,7 @@ public class VideoDesActivity extends AppCompatActivity {
         if (orientationUtils != null) {
             orientationUtils.backToProtVideo();
         }
-        if (GSYVideoManager.backFromWindowFull(this)) {
+        if (StandardGSYVideoPlayer.backFromWindowFull(this)) {
             return;
         }
         super.onBackPressed();
@@ -323,6 +339,7 @@ public class VideoDesActivity extends AppCompatActivity {
         super.onResume();
         isPause = false;
         getUserData();
+        MobclickAgent.onResume(this);
     }
 
     @Override
@@ -330,6 +347,7 @@ public class VideoDesActivity extends AppCompatActivity {
         getCurPlay().onVideoPause();
         super.onPause();
         isPause = true;
+        MobclickAgent.onPause(this);
     }
 
     @Override

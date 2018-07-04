@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <Button
+        android:id="@+id/btn_show_video_ad"
+        android:text="@string/btn_show_video_ad"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        style="@style/style_button"/>
+</RelativeLayout>

@@ -38,5 +38,6 @@
         android:layout_height="match_parent"
         android:text="暂无缓存数据"
         android:gravity="center"
+        android:visibility="gone"
         android:layout_centerVertical="true"/>
 </RelativeLayout>

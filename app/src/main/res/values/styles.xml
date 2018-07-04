@@ -78,5 +78,40 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@null</item>
     </style>
+    <style name="style_button">
 
+    <item name="android:layout_width">match_parent</item>
+
+    <item name="android:layout_height">wrap_content</item>
+
+    <item name="android:textColor">@android:color/white</item>
+
+    <item name="android:textSize">16sp</item>
+
+    <item name="android:layout_marginLeft">60dp</item>
+
+    <item name="android:background">@drawable/btn_background</item>
+
+    <item name="android:layout_marginRight">60dp</item>
+
+</style>
+    <style name="TextViewStyle">
+
+    <item name="android:layout_width">fill_parent</item>
+
+    <item name="android:layout_height">wrap_content</item>
+
+    <item name="android:layout_margin">10dp</item>
+
+    <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+
+</style>
+
+    <style parent="TextViewStyle" name="BtnStyle">
+
+    <item name="android:background">@drawable/buttonbg</item>
+
+    <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+
+</style>
 </resources>

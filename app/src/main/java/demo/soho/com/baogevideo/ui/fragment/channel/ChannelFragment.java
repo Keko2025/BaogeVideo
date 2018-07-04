@@ -113,7 +113,6 @@ public class ChannelFragment extends BaseFragment implements SwipeRefreshLayout.
                     initData();
                     loadMoreView.setVisibility(View.VISIBLE);
                 }
-                L.e((newState == RecyclerView.SCROLL_STATE_IDLE )+ ""+ (lastVisibleItem + 1 == mAdapter.getItemCount()));
             }
 
             @Override
@@ -146,13 +145,14 @@ public class ChannelFragment extends BaseFragment implements SwipeRefreshLayout.
             @Override
             public void onSuccess(String data) {
                 refreshLayout.setRefreshing(false);
-                loadMoreView.setVisibility(View.GONE);
                 VideoChannelBean videoChannelBean = new Gson().fromJson(data,VideoChannelBean.class);
                 if(videoChannelBean != null && videoChannelBean.getData().size() > 0){
+                    loadMoreView.setVisibility(View.GONE);
                     if(page == 1 && videoChannelBean.getData().size() > 0){
                         channelList.clear();
                     }
                 }else {
+                    loadMoreView.setVisibility(View.VISIBLE);
                     loadingTv.setText(R.string.load_finish);
                     loadPg.setVisibility(View.GONE);
                 }
@@ -172,7 +172,6 @@ public class ChannelFragment extends BaseFragment implements SwipeRefreshLayout.
                 refreshLayout.setRefreshing(false);
             }
         });
-
     }
 
     @Override

@@ -70,8 +70,8 @@ public class OkHttpUtil {
                     .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
                     .readTimeout(TIMEOUT, TimeUnit.SECONDS)
 //                    .addInterceptor(new MyInterceptors())
-//                    .sslSocketFactory(createSSLSocketFactory())
-//                    .hostnameVerifier(new TrustAllHostnameVerifier())
+                    .sslSocketFactory(createSSLSocketFactory())
+                    .hostnameVerifier(new TrustAllHostnameVerifier())
                     .build();
         }
         return client;
@@ -123,7 +123,8 @@ public class OkHttpUtil {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 try {
-                    if (response.isSuccessful()) {
+                    L.e("responseBody:" + response.body());
+                    if (response.isSuccessful() && response.body() != null) {
                         String msg = response.body().string();
                         CommonResponse jsonBean = new Gson().fromJson(msg,CommonResponse.class);
                         if(jsonBean.getStatus() != 1) {
@@ -132,6 +133,7 @@ public class OkHttpUtil {
                             onSuccess(callback,msg);
                         }
                     } else {
+                        L.e("responseBody:" + response.body());
                         throw new IOException("Unexpected code " + response);
                     }
                 }catch (IllegalStateException e){

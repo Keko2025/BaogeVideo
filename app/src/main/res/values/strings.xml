@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">仿豹哥健身</string>
+    <string name="app_name">我爱健身</string>
 
     <string name="introduction">简介</string>
     <string name="video_desc_review">评论</string>
@@ -12,5 +12,23 @@
     <string name="uri_test_8">http://mp4.vjshi.com/2017-04-14/933db6540f53dd38974b4446388fb928.mp4</string>
     <string name="uri_test_9">http://mp4.vjshi.com/2015-05-11/1431320221859_786.mp4</string>
     <string name="uri_test_11">http://mp4.vjshi.com/2016-12-22/3ccab5a78036fa933c8585f4a1e57a44.mp4</string>
-    <string name="uri_test_image">http://i3.letvimg.com/lc08_yunzhuanma/201707/29/20/49/3280a525bef381311b374579f360e80a_v2_MTMxODYyNjMw/thumb/2_960_540.jpg</string>
+
+    <string name="btn_show_video_ad">展示视频广告</string>
+
+
+    <string name="action_settings">设置</string>
+
+    <string name="btn_show_offerswall">展示积分墙(全屏)</string>
+
+    <string name="btn_show_offerswall_dialog">展示积分墙(对话框)</string>
+
+    <string name="btn_award_points">奖励10积分</string>
+
+    <string name="btn_spend_points">消费20积分</string>
+
+    <string name="btn_get_online_config">获取有米在线参数</string>
+
+    <string name="btn_check_reach_ntp_time">是否达到指定网络时间</string>
+
+    <string name="btn_check_ad_config">检查广告配置</string>
 </resources>

@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,11 +67,6 @@ public class RegisterNextActivity extends BaseActivity {
                 }else if(StringUtils.isEmptyString(etvPassword.getText().toString())){
                     Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
                 }
-//                else if(StringUtils.isEqual(etvPassword.getText().toString(),etvConfirmPassword.getText().toString())){
-//                    Toast.makeText(this, "Sorry,两次密码输入不一致,请重新输入", Toast.LENGTH_SHORT).show();
-//                    etvPassword.setText("");
-//                    etvConfirmPassword.setText("");
-//                }
                 achieveRegister();
                 break;
         }
@@ -108,6 +104,12 @@ public class RegisterNextActivity extends BaseActivity {
             }
         });
     }
-
-
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 }

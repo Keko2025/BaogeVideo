@@ -9,16 +9,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import abc.abc.abc.nm.cm.ErrorCode;
+import abc.abc.abc.nm.vdo.VideoAdListener;
+import abc.abc.abc.nm.vdo.VideoAdManager;
+import abc.abc.abc.nm.vdo.VideoAdSettings;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -71,6 +77,60 @@ public class CollectActivity extends BaseActivity implements SwipeRefreshLayout.
         initView();
         token = (String) SpUtil.get(BaogeApp.context, "token", "");
         initData();
+//        initAdv();
+    }
+
+    private void initAdv() {
+
+        // 设置视频广告
+        final VideoAdSettings videoAdSettings = new VideoAdSettings();
+        videoAdSettings.setInterruptTips("退出视频播放将无法获得奖励" + "\n确定要退出吗？");
+
+        //		// 只需要调用一次，由于在主页窗口中已经调用了一次，所以此处无需调用
+        //		VideoAdManager.getInstance().requestVideoAd(mContext);
+        // 展示视频广告
+        VideoAdManager.getInstance(CollectActivity.this)
+                .showVideoAd(CollectActivity.this, videoAdSettings, new VideoAdListener() {
+                    @Override
+                    public void onPlayStarted() {
+                        L.e("开始播放视频");
+                    }
+
+                    @Override
+                    public void onPlayInterrupted() {
+                        Toast.makeText(CollectActivity.this, "播放视频被中断", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPlayFailed(int errorCode) {
+                        L.e("视频播放失败");
+                        switch (errorCode) {
+                            case ErrorCode.NON_NETWORK:
+                                L.e("网络异常");
+                                break;
+                            case ErrorCode.NON_AD:
+                                L.e("视频暂无广告");
+                                break;
+                            case ErrorCode.RESOURCE_NOT_READY:
+                                L.e("视频资源还没准备好");
+                                break;
+                            case ErrorCode.SHOW_INTERVAL_LIMITED:
+                                L.e("视频展示间隔限制");
+                                break;
+                            case ErrorCode.WIDGET_NOT_IN_VISIBILITY_STATE:
+                                L.e("视频控件处在不可见状态");
+                                break;
+                            default:
+                                L.e("请稍后再试");
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onPlayCompleted() {
+                        Toast.makeText(CollectActivity.this, "视频播放成功", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void initData() {
@@ -209,5 +269,13 @@ public class CollectActivity extends BaseActivity implements SwipeRefreshLayout.
                 initData();
             }
         }, 2000);
+    }
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

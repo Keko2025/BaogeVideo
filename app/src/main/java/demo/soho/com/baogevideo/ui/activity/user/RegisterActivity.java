@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,7 +73,7 @@ public class RegisterActivity extends BaseActivity {
     }
     /**
      * 获取验证码
-     * @param s
+     * @param phoneNo
      */
     private void getCode(String phoneNo) {
         Map<String,Object> parameters = new HashMap<>();
@@ -99,5 +100,13 @@ public class RegisterActivity extends BaseActivity {
                 super.onStart();
             }
         });
+    }
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

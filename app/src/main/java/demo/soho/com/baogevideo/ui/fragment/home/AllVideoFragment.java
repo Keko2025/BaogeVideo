@@ -146,6 +146,10 @@ public class AllVideoFragment extends BaseFragment implements SwipeRefreshLayout
      */
     @Override
     protected void initData() {
+        getVideo();
+    }
+
+    private void getVideo() {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("p",page);
         parameters.put("r",pageno);

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:id="@+id/offersTestItems"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#5a5a5a"
+	>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		>
+
+		<TextView
+			android:id="@+id/pointsBalance"
+			style="@style/TextViewStyle"
+			android:textColor="#87cefa"
+			/>
+
+		<Button
+			android:id="@+id/btn_show_offerswall"
+			style="@style/BtnStyle"
+			android:text="@string/btn_show_offerswall"
+			/>
+
+		<Button
+			android:id="@+id/btn_show_offerswall_dialog"
+			style="@style/BtnStyle"
+			android:text="@string/btn_show_offerswall_dialog"
+			/>
+
+		<Button
+			android:id="@+id/btn_award_points"
+			style="@style/BtnStyle"
+			android:text="@string/btn_award_points"
+			/>
+
+		<Button
+			android:id="@+id/btn_spend_points"
+			style="@style/BtnStyle"
+			android:text="@string/btn_spend_points"
+			/>
+
+		<Button
+			android:id="@+id/btn_get_online_config"
+			style="@style/BtnStyle"
+			android:text="@string/btn_get_online_config"
+			/>
+
+		<Button
+			android:id="@+id/btn_check_reach_ntp_time"
+			style="@style/BtnStyle"
+			android:text="@string/btn_check_reach_ntp_time"
+			/>
+
+		<Button
+			android:id="@+id/btn_check_ad_config"
+			style="@style/BtnStyle"
+			android:text="@string/btn_check_ad_config"
+			/>
+
+		<TextView
+			android:id="@+id/tv_version"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="10dp"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@android:color/darker_gray"
+			/>
+	</LinearLayout >
+
+</ScrollView >

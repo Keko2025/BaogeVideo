@@ -5,7 +5,7 @@ import android.util.DisplayMetrics;
 
 /**
  * Created by dell on 2017/3/1.
- * desc： 屏幕像素转换工具类
+ *
  */
 public class DisplayUtil {
 

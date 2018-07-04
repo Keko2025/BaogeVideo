@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.ExoPlaybackException;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Arrays;
 
@@ -23,14 +24,13 @@ import chuangyuan.ycj.videolibrary.video.GestureVideoPlayer;
 import chuangyuan.ycj.videolibrary.widget.VideoPlayerView;
 import demo.soho.com.baogevideo.R;
 import demo.soho.com.baogevideo.data.DataSource;
-import demo.soho.com.baogevideo.ui.activity.base.BaseActivity;
 
 /**
  * @author dell
  * @data 2018/2/5.
  */
 
-public class VideoDetailActivity extends BaseActivity {
+public class VideoDetailActivity extends AppCompatActivity {
     @BindView(R.id.exo_play_context_id)
     VideoPlayerView videoPlayerView;
     @BindView(R.id.toolbar_tab)
@@ -70,11 +70,11 @@ public class VideoDetailActivity extends BaseActivity {
         exoPlayerManager.setPlaySwitchUri(0,0,getString(R.string.uri_test_11), Arrays.asList(test),Arrays.asList(name));
 
         exoPlayerManager.startPlayer();
-        Glide.with(this)
-                .load(getString(R.string.uri_test_image))
-                .fitCenter()
-                .placeholder(R.mipmap.test)
-                .into(videoPlayerView.getPreviewImage());
+//        Glide.with(this)
+//                .load(getString(R.string.uri_test_image))
+//                .fitCenter()
+//                .placeholder(R.mipmap.test)
+//                .into(videoPlayerView.getPreviewImage());
         exoPlayerManager.setVideoInfoListener(new VideoInfoListener() {
             @Override
             public void onPlayStart() {}
@@ -99,6 +99,7 @@ public class VideoDetailActivity extends BaseActivity {
         super.onResume();
         Log.d(TAG, "onResume");
         exoPlayerManager.onResume();
+        MobclickAgent.onResume(this);
     }
 
     @Override
@@ -106,13 +107,12 @@ public class VideoDetailActivity extends BaseActivity {
         super.onPause();
         Log.d(TAG, "onPause");
         exoPlayerManager.onPause();
+        MobclickAgent.onPause(this);
     }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
     }
 
     @Override

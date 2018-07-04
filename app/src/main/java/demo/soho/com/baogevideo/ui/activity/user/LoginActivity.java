@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,8 +76,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onError(String msg) {
                 super.onError(msg);
-                CodeBean codeBean = new Gson().fromJson(msg,CodeBean.class);
-                Toast.makeText(LoginActivity.this, codeBean.getMsg(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "error", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -85,5 +85,13 @@ public class LoginActivity extends BaseActivity {
                 Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

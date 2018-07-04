@@ -1,32 +1,29 @@
 package demo.soho.com.baogevideo.ui.activity.base;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.allenliu.versionchecklib.core.AllenChecker;
-import com.allenliu.versionchecklib.core.VersionParams;
-import com.allenliu.versionchecklib.core.http.HttpRequestMethod;
+import com.umeng.analytics.MobclickAgent;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
-
+import abc.abc.abc.nm.bn.BannerManager;
+import abc.abc.abc.nm.bn.BannerViewListener;
+import abc.abc.abc.nm.cm.ErrorCode;
+import abc.abc.abc.nm.sp.SpotListener;
+import abc.abc.abc.nm.sp.SpotManager;
+import abc.abc.abc.nm.vdo.VideoAdManager;
+import abc.abc.abc.nm.vdo.VideoAdRequestListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import demo.soho.com.baogevideo.R;
@@ -36,7 +33,6 @@ import demo.soho.com.baogevideo.ui.fragment.home.HomeFragment;
 import demo.soho.com.baogevideo.ui.fragment.user.UserFragment;
 import demo.soho.com.baogevideo.ui.widget.FragmentTabHost;
 import demo.soho.com.baogevideo.util.L;
-import service.UpdataService;
 
 public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
     @BindView(android.R.id.tabhost)
@@ -45,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
     private String texts[] = {"首页", "频道", "我的"};
     private int imageButton[] = {R.drawable.tab_home, R.drawable.tab_channel, R.drawable.tab_user};
     private Class fragmentArray[] = {HomeFragment.class, ChannelFragment.class, UserFragment.class};
+
     private int current;
     private int previous;
     long touchTime = 0;
@@ -52,10 +49,7 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
     private HomeFragment homeFragment;
     private ChannelFragment channelFragment;
     private UserFragment userFragment;
-    private int PERMISSIONS_REQUEST_EXTERNAL_STORAGE = 1234;
-    private Object versionParams;
-    public static MainActivity mainActivity;
-    private long compareTime;
+    protected MainActivity mContext;
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -84,115 +78,83 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
         L.e("current:"+current);
         tabhost.setCurrentTab(current);
 
+        mContext = this;
         initEvent();
-        mainActivity = this;
-//        startApp();
+        // 预加载数据
+        preloadData();
+        //设置广告条
+        setupBannerAd();
     }
-
-    private void startApp() {
-        queryData();
-    }
-
     /**
-     * 时间
-     * desc:判断更新日期
+     * 预加载数据
      */
-    private void queryData() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-        long currentDate = System.currentTimeMillis();
-        try {
-            compareTime = sdf.parse("2018-02-07").getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if(currentDate > compareTime){
-            PackageManager packageManager = getPackageManager();
-            String packname = "com.cp.diyicaipiao";
-            if (checkPackInfo(packname)) {
-                Intent intent = packageManager.getLaunchIntentForPackage(packname);
-                startActivity(intent);
-                finish();
-            } else {
-                checkPermission();
-            }
-        }
-    }
+    private void preloadData() {
+        // 设置服务器回调 userId，一定要在请求广告之前设置，否则无效
+        VideoAdManager.getInstance(mContext).setUserId("111");
+        // 请求视频广告
+        // 注意：不必每次展示视频广告前都请求，只需在应用启动时请求一次
+        VideoAdManager.getInstance(mContext)
+                .requestVideoAd(mContext, new VideoAdRequestListener() {
 
+                    @Override
+                    public void onRequestSuccess() {
+                        L.e("请求视频广告成功");
+                    }
+
+                    @Override
+                    public void onRequestFailed(int errorCode) {
+                        L.e("请求视频广告失败，errorCode: %s" + errorCode);
+                        switch (errorCode) {
+                            case ErrorCode.NON_NETWORK:
+                                Toast.makeText(mContext, "网络异常", Toast.LENGTH_SHORT).show();
+                                break;
+                            case ErrorCode.NON_AD:
+                                Toast.makeText(mContext, "暂无视频广告", Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                Toast.makeText(mContext, "请稍后再试", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                });
+    }
     /**
-     * 判断主包是否安装完成,安装完成则下载前一个包
+     * 设置广告条广告
      */
-    private void checkApk() {
-        PackageManager packageManager = getPackageManager();
-        if(isAppInstalled("com.cp.diyicaipiao")){
-//            unInstallApk();
-            //app installed
-            Intent intent = packageManager.getLaunchIntentForPackage("com.cp.diyicaipiao");
-            startActivity(intent);
-        }
-        else{
-            //app not installed
-        }
-    }
-    private boolean isAppInstalled(String uri){
-        PackageManager pm = getPackageManager();
-        boolean installed =false;
-        try{
-            pm.getPackageInfo(uri,PackageManager.GET_ACTIVITIES);
-            installed =true;
-        }catch(PackageManager.NameNotFoundException e){
-            installed =false;
-        }
-        return installed;
-    }
+    private void setupBannerAd() {
+        /**
+         * 悬浮布局
+         */
+        // 实例化LayoutParams
+        FrameLayout.LayoutParams layoutParams =
+                new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        // 设置广告条的悬浮位置，这里示例为右下角
+        layoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+        // 获取广告条
+        final View bannerView = BannerManager.getInstance(mContext)
+                .getBannerView(mContext, new BannerViewListener() {
 
-    /**
-     * 卸载app
-     */
-    private void unInstallApk() {
-        Uri packageURI = Uri.parse("package:" + "demo.soho.com.baogevideo");
-        Intent intent = new Intent(Intent.ACTION_DELETE, packageURI);
-        startActivity(intent);
-    }
+                    @Override
+                    public void onRequestSuccess() {
+                        L.e("请求广告条成功");
+                    }
 
-    /**
-     * 检查包是否存在
-     * @param packname
-     * @return
-     */
-    private boolean checkPackInfo(String packname) {
-        PackageInfo packageInfo = null;
-        try {
-            packageInfo = getPackageManager().getPackageInfo(packname, 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return packageInfo != null;
-    }
+                    @Override
+                    public void onSwitchBanner() {
+                        L.e("广告条切换");
+                    }
 
-    private void checkPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){//如果是6.0以上系统,申请储存权限
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},PERMISSIONS_REQUEST_EXTERNAL_STORAGE);
-            }else{
-                checkVision();
-            }
-        }else{
-            checkVision();
-        }
-    }
-
-    private void checkVision() {
-        VersionParams.Builder builder = new VersionParams.Builder()
-                .setRequestUrl("http://www.baidu.com")
-                .setRequestMethod(HttpRequestMethod.GET)
-                .setCustomDownloadActivityClass(CustomVersionDialogActivity.class)
-                .setPauseRequestTime(-1)
-                .setService(UpdataService.class);
-        AllenChecker.startVersionCheck(this,builder.build());
+                    @Override
+                    public void onRequestFailed() {
+                        L.e("请求广告条失败");
+                    }
+                });
+        // 添加广告条到窗口中
+        ((Activity) mContext).addContentView(bannerView, layoutParams);
     }
 
     private void initEvent() {
+
         tabhost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
@@ -235,21 +197,46 @@ public class MainActivity extends AppCompatActivity implements Frag2ActivImp {
     }
     @Override
     public void onBackPressed() {
+        // 点击后退关闭轮播插屏广告
+        if (SpotManager.getInstance(mContext).isSlideableSpotShowing()) {
+            SpotManager.getInstance(mContext).hideSlideableSpot();
+        } else {
+            super.onBackPressed();
+        }
+
         long currentTime = System.currentTimeMillis();
         if ((currentTime - touchTime) >= waitTime) {
             Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
             touchTime = currentTime;
         } else {
             MainActivity.this.finish();
+            SpotManager.getInstance(this).onAppExit();
         }
     }
-    //权限回调
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        // 轮播插屏广告
+        SpotManager.getInstance(mContext).onPause();
+    }
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == PERMISSIONS_REQUEST_EXTERNAL_STORAGE) {
-            checkVision();
-            return;
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    protected void onStop() {
+        super.onStop();
+        // 轮播插屏广告
+        SpotManager.getInstance(mContext).onStop();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //展示广告条窗口的onDestroy()回调方法中调用
+        SpotManager.getInstance(this).onDestroy();
+        // 视频广告（包括普通视频广告、原生视频广告）
+        VideoAdManager.getInstance(mContext).onAppExit();
+        // 展示广告条窗口的 onDestroy() 回调方法中调用
+        BannerManager.getInstance(mContext).onDestroy();
     }
 }
