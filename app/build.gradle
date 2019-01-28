@@ -6,7 +6,7 @@ android {
         release {
             keyAlias 'Change'
             keyPassword 'change'
-            storeFile file('E:/source/BaogeVideo/change.jks')
+//            storeFile file('E:/source/BaogeVideo/change.jks')
             storePassword 'change'
             v1SigningEnabled false
             v2SigningEnabled false
